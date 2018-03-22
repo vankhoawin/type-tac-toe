@@ -49,7 +49,7 @@ class GameState {
     }
 
     private onClickGridSquareHandler(e: Event): void {
-        if (this.meta.status === E.Status.Finished) {
+        if (this.meta.status !== E.Status.InProgress) {
             return;
         }
 
@@ -75,13 +75,15 @@ class GameState {
         this.state[row][col] = newSquare;
 
         if (this.checkWinningConditionsOfMove({ row, col }, newSquare)) {
-            this.meta.status = E.Status.Finished;
+            this.meta.status = E.Status.Victory;
 
             if (turn === E.Turn.Player1) {
                 ++this.meta.score.player1;
             } else {
                 ++this.meta.score.player2;
             }
+        } else if (this.checkIfBoardIsFilled(this.state)) {
+            this.meta.status = E.Status.Draw;
         } else {
             this.meta.turn = this.toggleTurn(this.meta.turn);
         }
@@ -155,6 +157,14 @@ class GameState {
         }
 
         return false;
+    }
+
+    private isSquareNotEmpty(square: E.Square) {
+        return square !== E.Square.Empty;
+    }
+
+    private checkIfBoardIsFilled(grid: T.GameStateGrid): boolean {
+        return grid.every((row) => row.every(this.isSquareNotEmpty));
     }
 }
 

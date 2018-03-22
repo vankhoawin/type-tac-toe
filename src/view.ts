@@ -22,13 +22,13 @@ export default class View {
         this.attachEventListeners();
     }
 
-    private removeEventListeners() {
+    private removeEventListeners(): void {
         this.$.newGameButton.removeEventListener('click', this.events.startNewGame);
         this.$.resetButton.removeEventListener('click', this.events.resetScore);
         this.$.board.removeEventListener('click', this.events.clickSquare);
     }
 
-    private attachEventListeners() {
+    private attachEventListeners(): void {
         this.$.newGameButton.addEventListener('click', this.events.startNewGame);
         this.$.resetButton.addEventListener('click', this.events.resetScore);
         this.$.board.addEventListener('click', this.events.clickSquare);
@@ -57,12 +57,14 @@ export default class View {
         return html;
     }
 
-    private renderVictory(turn: E.Turn): string {
-        return `Player ${turn} wins!`;
-    }
+    private renderSubheader(meta: T.IGameStateMeta): string {
+        if (meta.status === E.Status.Draw) {
+            return `Draw!`;
+        } else if (meta.status === E.Status.Victory) {
+            return `Player ${meta.turn} wins!`;
+        }
 
-    private renderPlayerTurn(turn: E.Turn): string {
-        return `Player ${turn}'s turn.`;
+        return `Player ${meta.turn}'s turn.`;
     }
 
     private renderScore(player: E.Turn, score: number): string {
@@ -96,11 +98,8 @@ export default class View {
 
     private renderToolbar(meta: T.IGameStateMeta): string {
         const turn: string = `
-            <h2 class="toolbar__turn-container">
-                ${meta.status === E.Status.Finished
-                    ? this.renderVictory(meta.turn)
-                    : this.renderPlayerTurn(meta.turn)
-                }
+            <h2 class="toolbar__subheader">
+                ${this.renderSubheader(meta)}
             </h2>
         `;
         const score: string = `

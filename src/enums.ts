@@ -4,8 +4,9 @@ export enum Turn {
 }
 
 export enum Status {
-    Finished = 0,
-    InProgress = 1,
+    InProgress = 0,
+    Victory = 1,
+    Draw = 2,
 }
 
 export enum Square {

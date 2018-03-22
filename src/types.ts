@@ -1,6 +1,6 @@
 import * as Enums from './enums';
 
-export type CurrentStatus = Enums.Status.Finished | Enums.Status.InProgress;
+export type CurrentStatus = Enums.Status.Draw | Enums.Status.Victory | Enums.Status.InProgress;
 export type GameStateSquare = Enums.Square.Empty | Enums.Square.X | Enums.Square.O;
 export type GameStateRow = [GameStateSquare, GameStateSquare, GameStateSquare];
 export type GameStateGrid = [GameStateRow, GameStateRow, GameStateRow];
