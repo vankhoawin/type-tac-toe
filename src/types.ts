@@ -1,13 +1,17 @@
-import * as Enums from './enums';
+import * as E from './enums';
 
-export type CurrentStatus = Enums.Status.Draw | Enums.Status.Victory | Enums.Status.InProgress;
-export type GameStateSquare = Enums.Square.Empty | Enums.Square.X | Enums.Square.O;
-export type GameStateRow = [GameStateSquare, GameStateSquare, GameStateSquare];
-export type GameStateGrid = [GameStateRow, GameStateRow, GameStateRow];
+export type CurrentStatus = E.Status.Draw | E.Status.Victory | E.Status.InProgress;
+export type GameStateSquare = E.Square.Empty | E.Square.X | E.Square.O;
+export type GameStateRow = GameStateSquare[];
+export type GameStateGrid = GameStateRow[];
 
 export interface IPoint {
     row: number;
     col: number;
+}
+
+export interface IModelConfig {
+    size: number;
 }
 
 export interface IGameStateIdSelectors {
@@ -20,20 +24,16 @@ export interface IGameStateClassSelectors {
 
 export interface IGameStateMeta {
     status: CurrentStatus;
-    turn: Enums.Turn;
+    turn: E.Turn;
     score: {
-        player1: number,
-        player2: number,
+        [E.Turn.Player1]: number,
+        [E.Turn.Player2]: number,
     };
+    size: number;
 }
 
 export interface IGameEventHandlers {
     startNewGame: (e: Event) => void;
     resetScore: (e: Event) => void;
     clickSquare: (e: Event) => void;
-}
-
-export interface IView {
-    selectors: IGameStateIdSelectors;
-    events: IGameEventHandlers;
 }

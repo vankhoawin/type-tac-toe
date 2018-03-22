@@ -1,55 +1,51 @@
 import * as E from './enums';
+import Model from './model';
 import * as T from './types';
 import View from './view';
 
 import './styles/index.scss';
 
+interface IControllerConfig {
+    model: T.IModelConfig;
+    selectors: T.IGameStateIdSelectors;
+}
+
 class GameState {
-    private state: T.GameStateGrid = this.resetBoard();
-    private meta: T.IGameStateMeta = {
-        score: {
-            player1: 0,
-            player2: 0,
-        },
-        status: E.Status.InProgress,
-        turn: E.Turn.Player1,
-    };
+    private model: Model;
     private view: View;
 
-    private readonly stateRowSize = this.state.length;
-    private readonly stateColSize = this.state[0].length;
-
-    constructor($selectors: T.IGameStateIdSelectors) {
+    constructor(config: IControllerConfig) {
+        this.model = new Model(config.model);
         this.view = new View({
             events: {
                 clickSquare: this.onClickGridSquareHandler.bind(this),
                 resetScore: this.onClickResetScoreHandler.bind(this),
                 startNewGame: this.onClickNewGameHandler.bind(this),
             },
-            selectors: $selectors,
+            selectors: config.selectors,
         });
     }
 
     public rerender(): void {
-        this.view.renderGame(this.state, this.meta);
+        this.view.renderGame(this.model.state, this.model.meta);
     }
 
     private onClickNewGameHandler(e: Event): void {
         e.preventDefault();
-        this.state = this.resetBoard();
-        this.meta.status = E.Status.InProgress;
+        this.model.resetBoard();
+        this.model.setStatus(E.Status.InProgress);
         this.rerender();
     }
 
     private onClickResetScoreHandler(e: Event): void {
         e.preventDefault();
-        this.meta.score.player1 = 0;
-        this.meta.score.player2 = 0;
+        this.model.resetScoreForPlayer(E.Turn.Player1);
+        this.model.resetScoreForPlayer(E.Turn.Player2);
         this.rerender();
     }
 
     private onClickGridSquareHandler(e: Event): void {
-        if (this.meta.status !== E.Status.InProgress) {
+        if (this.model.status !== E.Status.InProgress) {
             return;
         }
 
@@ -60,43 +56,29 @@ class GameState {
         }
 
         e.stopPropagation();
-        const { turn } = this.meta;
         const row: number = parseInt(target.getAttribute('data-row') as string, 10);
         const col: number = parseInt(target.getAttribute('data-col') as string, 10);
-        const currentSquare: E.Square = this.state[row][col];
+        const currentSquare: E.Square = this.model.state[row][col];
 
         if (currentSquare !== E.Square.Empty) {
             return;
         }
 
-        const newSquare: E.Square = turn === E.Turn.Player1
+        const newSquare: E.Square = this.model.turn === E.Turn.Player1
             ? E.Square.X
             : E.Square.O;
-        this.state[row][col] = newSquare;
+        this.model.state[row][col] = newSquare;
 
         if (this.checkWinningConditionsOfMove({ row, col }, newSquare)) {
-            this.meta.status = E.Status.Victory;
-
-            if (turn === E.Turn.Player1) {
-                ++this.meta.score.player1;
-            } else {
-                ++this.meta.score.player2;
-            }
-        } else if (this.checkIfBoardIsFilled(this.state)) {
-            this.meta.status = E.Status.Draw;
+            this.model.status = E.Status.Victory;
+            this.model.incrementScoreForPlayer(this.model.turn);
+        } else if (this.checkIfBoardIsFilled(this.model.state)) {
+            this.model.status = E.Status.Draw;
         } else {
-            this.meta.turn = this.toggleTurn(this.meta.turn);
+            this.model.turn = this.toggleTurn(this.model.turn);
         }
 
         this.rerender();
-    }
-
-    private resetBoard(): T.GameStateGrid {
-        return [
-            [E.Square.Empty, E.Square.Empty, E.Square.Empty],
-            [E.Square.Empty, E.Square.Empty, E.Square.Empty],
-            [E.Square.Empty, E.Square.Empty, E.Square.Empty],
-        ];
     }
 
     private toggleTurn(turn: E.Turn): E.Turn {
@@ -107,18 +89,18 @@ class GameState {
 
     private moveIsWithinBoundaries({ row, col }: T.IPoint): boolean {
         return (
-            row < this.stateRowSize && row >= 0 &&
-            col < this.stateColSize && col >= 0
+            row < this.model.boardSize && row >= 0 &&
+            col < this.model.boardSize && col >= 0
         );
     }
 
     private isMatchingPoint({ row, col }: T.IPoint, square: E.Square): boolean {
-        return this.state[row][col] === square;
+        return this.model.state[row][col] === square;
     }
 
     private columnHasWinningMoves(moves: T.IPoint[], square: E.Square): boolean {
         return (
-            moves.length === this.state.length &&
+            moves.length === this.model.boardSize &&
             moves.every((point: T.IPoint) => this.isMatchingPoint(point, square))
         );
     }
@@ -171,7 +153,12 @@ class GameState {
 const $board: HTMLElement = document.getElementById('board')!;
 const $toolbar: HTMLElement = document.getElementById('toolbar')!;
 const gameState = new GameState({
-    board: $board,
-    toolbar: $toolbar,
+    model: {
+        size: 3,
+    },
+    selectors: {
+        board: $board,
+        toolbar: $toolbar,
+    },
 });
 gameState.rerender();

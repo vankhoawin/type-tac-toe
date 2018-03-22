@@ -1,11 +1,16 @@
 import * as E from './enums';
 import * as T from './types';
 
+interface IViewConfig {
+    selectors: T.IGameStateIdSelectors;
+    events: T.IGameEventHandlers;
+}
+
 export default class View {
     private $: T.IGameStateIdSelectors & T.IGameStateClassSelectors;
     private events: T.IGameEventHandlers;
 
-    constructor({ selectors, events }: T.IView) {
+    constructor({ selectors, events }: IViewConfig) {
        this.$ = selectors;
        this.events = events;
     }
@@ -104,8 +109,8 @@ export default class View {
         `;
         const score: string = `
             <div class="toolbar__score-container">
-                ${this.renderScore(E.Turn.Player1, meta.score.player1)}
-                ${this.renderScore(E.Turn.Player2, meta.score.player2)}
+                ${this.renderScore(E.Turn.Player1, meta.score[E.Turn.Player1])}
+                ${this.renderScore(E.Turn.Player2, meta.score[E.Turn.Player2])}
             </div>
         `;
         const toolbar: string = this.renderToolbarButtons();
