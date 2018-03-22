@@ -19,11 +19,20 @@ export default class Model {
     }
 
     public get state(): T.GameStateGrid {
-        return this.STATE;
+        const clone: T.GameStateGrid = [];
+
+        for (let i = 0; i < this.META.size; ++i) {
+            clone.push([...this.STATE[i]]);
+        }
+
+        return clone;
     }
 
     public get meta(): T.IGameStateMeta {
-        return this.META;
+        return {
+            ...this.META,
+            score: { ...this.META.score },
+        };
     }
 
     public get status(): E.Status {
@@ -44,6 +53,14 @@ export default class Model {
 
     public get boardSize(): number {
         return this.META.size;
+    }
+
+    public getSquare({ row, col }: T.IPoint): T.GameStateSquare {
+        return this.STATE[row][col];
+    }
+
+    public setSquare({ row, col }: T.IPoint, square: E.Square): void {
+        this.STATE[row][col] = square;
     }
 
     public getScoreForPlayer(turn: E.Turn): number {
@@ -81,10 +98,10 @@ export default class Model {
     private getEmptyBoard(): T.GameStateGrid {
         const grid: T.GameStateGrid = [];
 
-        for (let i = 0; i < this.meta.size; ++i) {
+        for (let i = 0; i < this.META.size; ++i) {
             const row: T.GameStateRow = [];
 
-            for (let j = 0; j < this.meta.size; ++j) {
+            for (let j = 0; j < this.META.size; ++j) {
                 row.push(E.Square.Empty);
             }
 

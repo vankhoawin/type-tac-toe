@@ -1,7 +1,7 @@
 import * as E from './enums';
 import * as T from './types';
 
-export default class Controller {
+export default class Logic {
     public checkIfBoardIsFilled(grid: T.GameStateGrid): boolean {
         return grid.every((row) => row.every(this.isSquareNotEmpty));
     }
@@ -13,7 +13,6 @@ export default class Controller {
         boardSize: number,
     ): boolean {
         const diagonalDownRightMoves: T.IPoint[] = [];
-
         for (
             let i = 0, j = col - row;
             this.moveIsWithinBoundaries({ row: i, col: j }, boardSize);
@@ -63,6 +62,7 @@ export default class Controller {
 
         return false;
     }
+
     private moveIsWithinBoundaries(
         { row, col }: T.IPoint,
         boardSize: number,

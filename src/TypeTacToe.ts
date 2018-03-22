@@ -59,7 +59,8 @@ export default class TypeTacToe {
         e.stopPropagation();
         const row: number = parseInt(target.getAttribute('data-row') as string, 10);
         const col: number = parseInt(target.getAttribute('data-col') as string, 10);
-        const currentSquare: E.Square = this.model.state[row][col];
+        const point: T.IPoint = { row, col };
+        const currentSquare: E.Square = this.model.getSquare(point);
 
         if (currentSquare !== E.Square.Empty) {
             return;
@@ -68,7 +69,7 @@ export default class TypeTacToe {
         const newSquare: E.Square = this.model.turn === E.Turn.Player1
             ? E.Square.X
             : E.Square.O;
-        this.model.state[row][col] = newSquare;
+        this.model.setSquare(point, newSquare);
 
         if (this.logic.checkWinningConditionsOfMove(
             this.model.state,
