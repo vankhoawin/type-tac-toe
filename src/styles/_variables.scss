@@ -1,0 +1,12 @@
+$background-color-main: hsl(210, 29%, 24%);
+$background-color-square-empty: #34495e;
+$background-color-square-X: #aa4139;
+$background-color-square-O: #625ada;
+$button-color: #c4bbaf;
+$font-color: #eee;
+
+$breakpoints: (
+  'small':  ( min-width:  767px ),
+  'medium': ( min-width:  992px ),
+  'large':  ( min-width: 1200px )
+) !default;

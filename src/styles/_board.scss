@@ -1,0 +1,42 @@
+@import 'variables';
+@import 'mixins';
+
+.board {
+  @include component();
+
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  grid-gap: 10px;
+
+  &__square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    border: 0;
+    font-size: 2rem;
+    color: $font-color;
+
+    &:hover,
+    &:focus {
+      outline: none;
+    }
+
+    &--empty {
+      @include button-color($background-color-square-empty);
+
+      &:hover,
+      &:focus {
+        cursor: pointer;
+      }
+    }
+
+    &--X {
+      background-color: $background-color-square-X;
+    }
+
+    &--O {
+      background-color: $background-color-square-O;
+    }
+  }
+}

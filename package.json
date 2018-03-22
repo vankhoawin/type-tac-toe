@@ -1,0 +1,25 @@
+{
+  "name": "type-tac-toe",
+  "version": "0.0.1",
+  "description": "type-tac-toe",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --open --no-inline"
+  },
+  "author": "Van Nguyen <vnguyen94@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "awesome-typescript-loader": "^4.0.1",
+    "html-webpack-plugin": "^3.0.7",
+    "source-map-loader": "^0.2.3",
+    "ts-loader": "^4.1.0",
+    "typescript": "^2.7.2",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.12",
+    "css-loader": "^0.28.11",
+    "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.7",
+    "style-loader": "^0.20.3",
+    "webpack-dev-server": "^3.1.1"
+  }
+}
