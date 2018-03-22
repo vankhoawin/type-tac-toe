@@ -1,32 +1,32 @@
+import * as E from './enums';
+import * as T from './types';
 import View from './view';
-import * as Types from './types';
-import * as Enums from './enums';
 
-import './styles/index.scss'; 
+import './styles/index.scss';
 
 class GameState {
-    private state: Types.GameStateGrid = this.resetBoard();
-    private meta: Types.GameStateMeta = {
-        status: Enums.Status.InProgress,
-        turn: Enums.Turn.Player1,
+    private state: T.GameStateGrid = this.resetBoard();
+    private meta: T.IGameStateMeta = {
         score: {
             player1: 0,
             player2: 0,
         },
+        status: E.Status.InProgress,
+        turn: E.Turn.Player1,
     };
-    private view: View
+    private view: View;
 
-    readonly stateRowSize = this.state.length;
-    readonly stateColSize = this.state[0].length;
+    private readonly stateRowSize = this.state.length;
+    private readonly stateColSize = this.state[0].length;
 
-    constructor($selectors: Types.GameStateIdSelectors) {
+    constructor($selectors: T.IGameStateIdSelectors) {
         this.view = new View({
-            selectors: $selectors,
             events: {
-                startNewGame: this.onClickNewGameHandler.bind(this),
-                resetScore: this.onClickResetScoreHandler.bind(this),
                 clickSquare: this.onClickGridSquareHandler.bind(this),
+                resetScore: this.onClickResetScoreHandler.bind(this),
+                startNewGame: this.onClickNewGameHandler.bind(this),
             },
+            selectors: $selectors,
         });
     }
 
@@ -37,7 +37,7 @@ class GameState {
     private onClickNewGameHandler(e: Event): void {
         e.preventDefault();
         this.state = this.resetBoard();
-        this.meta.status = Enums.Status.InProgress;
+        this.meta.status = E.Status.InProgress;
         this.rerender();
     }
 
@@ -49,11 +49,11 @@ class GameState {
     }
 
     private onClickGridSquareHandler(e: Event): void {
-        if (this.meta.status === Enums.Status.Finished) {
+        if (this.meta.status === E.Status.Finished) {
             return;
         }
 
-        const target: HTMLInputElement = <HTMLInputElement>e.target;
+        const target: HTMLInputElement = e.target as HTMLInputElement;
 
         if (!target.matches('.js-board-square')) {
             return;
@@ -61,23 +61,23 @@ class GameState {
 
         e.stopPropagation();
         const { turn } = this.meta;
-        const row: number = parseInt(<string>target.getAttribute('data-row'), 10);
-        const col: number = parseInt(<string>target.getAttribute('data-col'), 10);
-        const currentSquare: Enums.Square = this.state[row][col];
+        const row: number = parseInt(target.getAttribute('data-row') as string, 10);
+        const col: number = parseInt(target.getAttribute('data-col') as string, 10);
+        const currentSquare: E.Square = this.state[row][col];
 
-        if (currentSquare !== Enums.Square.Empty) {
+        if (currentSquare !== E.Square.Empty) {
             return;
         }
 
-        const newSquare: Enums.Square = turn === Enums.Turn.Player1
-            ? Enums.Square.X
-            : Enums.Square.O;
+        const newSquare: E.Square = turn === E.Turn.Player1
+            ? E.Square.X
+            : E.Square.O;
         this.state[row][col] = newSquare;
 
         if (this.checkWinningConditionsOfMove({ row, col }, newSquare)) {
-            this.meta.status = Enums.Status.Finished;
+            this.meta.status = E.Status.Finished;
 
-            if (turn === Enums.Turn.Player1) {
+            if (turn === E.Turn.Player1) {
                 ++this.meta.score.player1;
             } else {
                 ++this.meta.score.player2;
@@ -89,40 +89,40 @@ class GameState {
         this.rerender();
     }
 
-    private resetBoard(): Types.GameStateGrid {
+    private resetBoard(): T.GameStateGrid {
         return [
-            [Enums.Square.Empty, Enums.Square.Empty, Enums.Square.Empty],
-            [Enums.Square.Empty, Enums.Square.Empty, Enums.Square.Empty],
-            [Enums.Square.Empty, Enums.Square.Empty, Enums.Square.Empty],
+            [E.Square.Empty, E.Square.Empty, E.Square.Empty],
+            [E.Square.Empty, E.Square.Empty, E.Square.Empty],
+            [E.Square.Empty, E.Square.Empty, E.Square.Empty],
         ];
     }
 
-    private toggleTurn(turn: Enums.Turn): Enums.Turn {
-        return turn === Enums.Turn.Player1
-            ? Enums.Turn.Player2
-            : Enums.Turn.Player1;
+    private toggleTurn(turn: E.Turn): E.Turn {
+        return turn === E.Turn.Player1
+            ? E.Turn.Player2
+            : E.Turn.Player1;
     }
 
-    private moveIsWithinBoundaries({ row, col }: Types.Point): boolean {
+    private moveIsWithinBoundaries({ row, col }: T.IPoint): boolean {
         return (
             row < this.stateRowSize && row >= 0 &&
             col < this.stateColSize && col >= 0
         );
     }
 
-    private isMatchingPoint({ row, col }: Types.Point, square: Enums.Square): boolean {
+    private isMatchingPoint({ row, col }: T.IPoint, square: E.Square): boolean {
         return this.state[row][col] === square;
     }
 
-    private columnHasWinningMoves(moves: Types.Point[], square: Enums.Square): boolean {
+    private columnHasWinningMoves(moves: T.IPoint[], square: E.Square): boolean {
         return (
             moves.length === this.state.length &&
-            moves.every((point: Types.Point) => this.isMatchingPoint(point, square))
+            moves.every((point: T.IPoint) => this.isMatchingPoint(point, square))
         );
     }
 
-    private checkWinningConditionsOfMove({ row, col }: Types.Point, square: Enums.Square): boolean {
-        const diagonalDownRightMoves: Types.Point[] = [];
+    private checkWinningConditionsOfMove({ row, col }: T.IPoint, square: E.Square): boolean {
+        const diagonalDownRightMoves: T.IPoint[] = [];
         for (let i = 0, j = col - row; this.moveIsWithinBoundaries({ row: i, col: j }); ++i, ++j) {
             diagonalDownRightMoves.push({ row: i, col: j });
         }
@@ -130,7 +130,7 @@ class GameState {
             return true;
         }
 
-        const diagonalDownLeftMoves: Types.Point[] = [];
+        const diagonalDownLeftMoves: T.IPoint[] = [];
         for (let i = 0, j = col + row; this.moveIsWithinBoundaries({ row: i, col: j }); ++i, --j) {
             diagonalDownLeftMoves.push({ row: i, col: j });
         }
@@ -138,7 +138,7 @@ class GameState {
             return true;
         }
 
-        const columnMoves: Types.Point[] = [];
+        const columnMoves: T.IPoint[] = [];
         for (let i = row, j = 0; this.moveIsWithinBoundaries({ row: i, col: j }); ++j) {
             columnMoves.push({ row: i, col: j });
         }
@@ -146,7 +146,7 @@ class GameState {
             return true;
         }
 
-        const rowMoves: Types.Point[] = [];
+        const rowMoves: T.IPoint[] = [];
         for (let i = 0, j = col; this.moveIsWithinBoundaries({ row: i, col: j }); ++i) {
             rowMoves.push({ row: i, col: j });
         }

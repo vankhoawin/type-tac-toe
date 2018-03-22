@@ -1,16 +1,16 @@
-import * as Types from './types';
-import * as Enums from './enums';
+import * as E from './enums';
+import * as T from './types';
 
 export default class View {
-    private $: Types.GameStateIdSelectors & Types.GameStateClassSelectors;
-    private events: Types.GameEventHandlers;
+    private $: T.IGameStateIdSelectors & T.IGameStateClassSelectors;
+    private events: T.IGameEventHandlers;
 
-    constructor({ selectors, events }: Types.View) {
+    constructor({ selectors, events }: T.IView) {
        this.$ = selectors;
        this.events = events;
     }
 
-    public renderGame(state: Types.GameStateGrid, meta: Types.GameStateMeta): void {
+    public renderGame(state: T.GameStateGrid, meta: T.IGameStateMeta): void {
         this.$.board.innerHTML = this.renderGrid(state);
         this.$.toolbar.innerHTML = this.renderToolbar(meta);
 
@@ -33,21 +33,21 @@ export default class View {
         this.$.resetButton.addEventListener('click', this.events.resetScore);
         this.$.board.addEventListener('click', this.events.clickSquare);
     }
-    private renderSquare(type: Enums.Square, rowIndex: number, colIndex: number): string {
+    private renderSquare(type: E.Square, rowIndex: number, colIndex: number): string {
         const commonClasses = 'js-board-square board__square board__square';
         const row = `data-row=${rowIndex}`;
         const col = `data-col=${colIndex}`;
 
-        if (type === Enums.Square.X) {
+        if (type === E.Square.X) {
             return `<button ${row} ${col} class="${commonClasses}--X">X</button>`;
-        } else if (type === Enums.Square.O) {
+        } else if (type === E.Square.O) {
             return `<button ${row} ${col} class="${commonClasses}--O">O</button>`;
         } else {
             return `<button ${row} ${col} class="${commonClasses}--empty"></button>`;
         }
     }
 
-    private renderGrid(grid: Types.GameStateGrid): string {
+    private renderGrid(grid: T.GameStateGrid): string {
         const html: string = grid.reduce((acc, row, i) => (
             acc + row.reduce((acc2, square, j) => (
                 acc2 + this.renderSquare(square, i, j)
@@ -57,15 +57,15 @@ export default class View {
         return html;
     }
 
-    private renderVictory(turn: Enums.Turn): string {
+    private renderVictory(turn: E.Turn): string {
         return `Player ${turn} wins!`;
     }
 
-    private renderPlayerTurn(turn: Enums.Turn): string {
+    private renderPlayerTurn(turn: E.Turn): string {
         return `Player ${turn}'s turn.`;
     }
 
-    private renderScore(player: Enums.Turn, score: number): string {
+    private renderScore(player: E.Turn, score: number): string {
         return `
             <div class="toolbar__score">
                 Player ${player}: ${score}
@@ -94,10 +94,10 @@ export default class View {
         `;
     }
 
-    private renderToolbar(meta: Types.GameStateMeta): string {
+    private renderToolbar(meta: T.IGameStateMeta): string {
         const turn: string = `
             <h2 class="toolbar__turn-container">
-                ${meta.status === Enums.Status.Finished
+                ${meta.status === E.Status.Finished
                     ? this.renderVictory(meta.turn)
                     : this.renderPlayerTurn(meta.turn)
                 }
@@ -105,12 +105,12 @@ export default class View {
         `;
         const score: string = `
             <div class="toolbar__score-container">
-                ${this.renderScore(Enums.Turn.Player1, meta.score.player1)}
-                ${this.renderScore(Enums.Turn.Player2, meta.score.player2)}
+                ${this.renderScore(E.Turn.Player1, meta.score.player1)}
+                ${this.renderScore(E.Turn.Player2, meta.score.player2)}
             </div>
         `;
         const toolbar: string = this.renderToolbarButtons();
 
         return score + turn + toolbar;
-    } 
+    }
 }
