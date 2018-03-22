@@ -1,4 +1,7 @@
+const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+
+const config = require('./src/config');
 
 module.exports = {
   mode: 'development',
@@ -25,7 +28,12 @@ module.exports = {
         use: [
           { loader: 'style-loader' },
           { loader: 'css-loader' },
-          { loader: 'sass-loader' },
+          {
+            loader: 'sass-loader',
+            options: {
+              data: `$board_size: ${config.BOARD_SIZE};`,
+            },
+          },
         ],
       },
     ],
@@ -34,6 +42,9 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: './src/index.html',
       filename: './index.html',
+    }),
+    new webpack.DefinePlugin({
+      BOARD_SIZE: config.BOARD_SIZE,
     }),
   ],
 };

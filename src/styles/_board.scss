@@ -5,7 +5,8 @@
   @include component();
 
   display: grid;
-  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  // use global variable to render board template
+  grid-template: repeat($board-size, 1fr) / repeat($board-size, 1fr);
   grid-gap: 10px;
 
   &__square {
