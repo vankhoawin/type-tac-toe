@@ -19,15 +19,20 @@ export default class View {
         this.$.board.innerHTML = this.renderGrid(state);
         this.$.toolbar.innerHTML = this.renderToolbar(meta);
 
+        this.removeEventListeners();
         // add dynamically created selectors
         this.$.newGameButton = document.getElementById('js-new-button')!;
         this.$.resetButton = document.getElementById('js-reset-button')!;
         this.$.squares = document.getElementsByClassName('js-board-square')!;
-
         this.attachEventListeners();
     }
 
     private removeEventListeners(): void {
+        // on first run, dynamically created selectors do not exist
+        if (!this.$.newGameButton || !this.$.resetButton || !this.$.board) {
+            return;
+        }
+
         this.$.newGameButton.removeEventListener('click', this.events.startNewGame);
         this.$.resetButton.removeEventListener('click', this.events.resetScore);
         this.$.board.removeEventListener('click', this.events.clickSquare);
@@ -38,6 +43,7 @@ export default class View {
         this.$.resetButton.addEventListener('click', this.events.resetScore);
         this.$.board.addEventListener('click', this.events.clickSquare);
     }
+
     private renderSquare(type: E.Square, rowIndex: number, colIndex: number): string {
         const commonClasses = 'js-board-square board__square board__square';
         const row = `data-row=${rowIndex}`;
