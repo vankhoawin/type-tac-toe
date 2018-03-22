@@ -1,4 +1,5 @@
 import * as E from './enums';
+import Logic from './logic';
 import Model from './model';
 import * as T from './types';
 import View from './view';
@@ -13,6 +14,7 @@ interface IControllerConfig {
 class GameState {
     private model: Model;
     private view: View;
+    private logic: Logic;
 
     constructor(config: IControllerConfig) {
         this.model = new Model(config.model);
@@ -24,6 +26,7 @@ class GameState {
             },
             selectors: config.selectors,
         });
+        this.logic = new Logic();
     }
 
     public rerender(): void {
@@ -69,84 +72,21 @@ class GameState {
             : E.Square.O;
         this.model.state[row][col] = newSquare;
 
-        if (this.checkWinningConditionsOfMove({ row, col }, newSquare)) {
+        if (this.logic.checkWinningConditionsOfMove(
+            this.model.state,
+            { row, col },
+            newSquare,
+            this.model.boardSize,
+        )) {
             this.model.status = E.Status.Victory;
             this.model.incrementScoreForPlayer(this.model.turn);
-        } else if (this.checkIfBoardIsFilled(this.model.state)) {
+        } else if (this.logic.checkIfBoardIsFilled(this.model.state)) {
             this.model.status = E.Status.Draw;
         } else {
-            this.model.turn = this.toggleTurn(this.model.turn);
+            this.model.toggleTurn(this.model.turn);
         }
 
         this.rerender();
-    }
-
-    private toggleTurn(turn: E.Turn): E.Turn {
-        return turn === E.Turn.Player1
-            ? E.Turn.Player2
-            : E.Turn.Player1;
-    }
-
-    private moveIsWithinBoundaries({ row, col }: T.IPoint): boolean {
-        return (
-            row < this.model.boardSize && row >= 0 &&
-            col < this.model.boardSize && col >= 0
-        );
-    }
-
-    private isMatchingPoint({ row, col }: T.IPoint, square: E.Square): boolean {
-        return this.model.state[row][col] === square;
-    }
-
-    private columnHasWinningMoves(moves: T.IPoint[], square: E.Square): boolean {
-        return (
-            moves.length === this.model.boardSize &&
-            moves.every((point: T.IPoint) => this.isMatchingPoint(point, square))
-        );
-    }
-
-    private checkWinningConditionsOfMove({ row, col }: T.IPoint, square: E.Square): boolean {
-        const diagonalDownRightMoves: T.IPoint[] = [];
-        for (let i = 0, j = col - row; this.moveIsWithinBoundaries({ row: i, col: j }); ++i, ++j) {
-            diagonalDownRightMoves.push({ row: i, col: j });
-        }
-        if (this.columnHasWinningMoves(diagonalDownRightMoves, square)) {
-            return true;
-        }
-
-        const diagonalDownLeftMoves: T.IPoint[] = [];
-        for (let i = 0, j = col + row; this.moveIsWithinBoundaries({ row: i, col: j }); ++i, --j) {
-            diagonalDownLeftMoves.push({ row: i, col: j });
-        }
-        if (this.columnHasWinningMoves(diagonalDownLeftMoves, square)) {
-            return true;
-        }
-
-        const columnMoves: T.IPoint[] = [];
-        for (let i = row, j = 0; this.moveIsWithinBoundaries({ row: i, col: j }); ++j) {
-            columnMoves.push({ row: i, col: j });
-        }
-        if (this.columnHasWinningMoves(columnMoves, square)) {
-            return true;
-        }
-
-        const rowMoves: T.IPoint[] = [];
-        for (let i = 0, j = col; this.moveIsWithinBoundaries({ row: i, col: j }); ++i) {
-            rowMoves.push({ row: i, col: j });
-        }
-        if (this.columnHasWinningMoves(rowMoves, square)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    private isSquareNotEmpty(square: E.Square) {
-        return square !== E.Square.Empty;
-    }
-
-    private checkIfBoardIsFilled(grid: T.GameStateGrid): boolean {
-        return grid.every((row) => row.every(this.isSquareNotEmpty));
     }
 }
 

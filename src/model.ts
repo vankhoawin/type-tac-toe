@@ -67,6 +67,13 @@ export default class Model {
         this.META.status = status;
     }
 
+    public toggleTurn(turn: E.Turn): void {
+        const newTurn = turn === E.Turn.Player1
+            ? E.Turn.Player2
+            : E.Turn.Player1;
+        this.META.turn = newTurn;
+    }
+
     private setScoreForPlayer(turn: E.Turn, newScore: number): void {
         this.META.score[turn] = newScore;
     }
