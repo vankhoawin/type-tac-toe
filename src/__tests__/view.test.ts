@@ -1,25 +1,8 @@
-import 'jest';
-import * as E from '../enums';
 import * as T from '../types';
 import View from '../view';
+import scaffold from './scaffold';
 
 describe('View', () => {
-    const defaults = {
-        meta: {
-            score: {
-                [E.Turn.Player1]: 3,
-                [E.Turn.Player2]: 2,
-            },
-            size: 3,
-            status: E.Status.InProgress,
-            turn: E.Turn.Player1,
-        },
-        state: [
-            [E.Square.X, E.Square.O, E.Square.Empty],
-            [E.Square.Empty, E.Square.X, E.Square.Empty],
-            [E.Square.Empty, E.Square.Empty, E.Square.X],
-        ],
-    };
     let meta: T.IGameStateMeta;
     let state: T.GameStateGrid;
     let view: any;
@@ -29,8 +12,8 @@ describe('View', () => {
     let element: string;
 
     beforeEach(() => {
-        meta = defaults.meta;
-        state = defaults.state;
+        meta = scaffold.meta;
+        state = scaffold.state;
         startNewGameMock = jest.fn();
         resetScoreMock = jest.fn();
         clickSquareMock = jest.fn();
