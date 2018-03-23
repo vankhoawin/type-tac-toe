@@ -75,7 +75,7 @@ export default class TypeTacToe {
             this.model.state,
             { row, col },
             newSquare,
-            this.model.boardSize,
+            this.model.size,
         )) {
             this.model.status = E.Status.Victory;
             this.model.incrementScoreForPlayer(this.model.turn);

@@ -51,11 +51,11 @@ export default class Model {
         this.META.turn = turn;
     }
 
-    public get boardSize(): number {
+    public get size(): number {
         return this.META.size;
     }
 
-    public getSquare({ row, col }: T.IPoint): T.GameStateSquare {
+    public getSquare({ row, col }: T.IPoint): E.Square {
         return this.STATE[row][col];
     }
 
