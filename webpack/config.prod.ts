@@ -1,4 +1,5 @@
 import CleanWebpackPlugin from 'clean-webpack-plugin';
+import CompressionPlugin from 'compression-webpack-plugin';
 import HtmlWebPackPlugin from 'html-webpack-plugin';
 import * as path from 'path';
 import webpack from 'webpack';
@@ -38,7 +39,7 @@ const webpackConfig: webpack.Configuration = {
         ],
     },
     output: {
-        filename: '[name].bundle.js',
+        filename: '[name].[chunkhash].js',
         path: path.resolve(__dirname, '..', 'dist'),
     },
     plugins: [
@@ -50,6 +51,13 @@ const webpackConfig: webpack.Configuration = {
             BOARD_SIZE: config.BOARD_SIZE,
         }),
         new CleanWebpackPlugin(path.resolve(__dirname, '..', 'dist')),
+        new CompressionPlugin({
+            algorithm: 'gzip',
+            asset: '[path].gz[query]',
+            minRatio: 0.8,
+            test: /\.js$|\.css$|\.html$|\.eot?.+$|\.ttf?.+$|\.woff?.+$|\.svg?.+$/,
+            threshold: 10240,
+        }),
     ],
     resolve: {
         extensions: ['.js', '.ts', '.scss'],
