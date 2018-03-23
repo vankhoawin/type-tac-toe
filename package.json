@@ -6,13 +6,15 @@
     "scripts": {
         "start": "ts-node webpack/devServer",
         "build": "ts-node webpack/build",
-        "test": "jest",
-        "test:watch": "yarn test --watch",
+        "test": "jest --watch",
+        "test:ci": "jest",
+        "test:cover": "jest --coverage",
         "lint": "yarn lint:css && yarn lint:js",
         "lint:css": "stylelint src/**/*.scss",
         "lint:js": "tslint **/*.ts"
     },
     "jest": {
+        "coverageDirectory": "<rootDir>/coverage",
         "moduleFileExtensions": [
             "js",
             "ts"
