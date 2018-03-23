@@ -7,6 +7,7 @@
         "start": "ts-node webpack/devServer",
         "build": "ts-node webpack/build",
         "test": "jest",
+        "test:watch": "yarn test --watch",
         "lint": "yarn lint:css && yarn lint:js",
         "lint:css": "stylelint src/**/*.scss",
         "lint:js": "tslint **/*.ts"
@@ -19,7 +20,7 @@
         "transform": {
             "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
         },
-        "testRegex": "/__tests__/.*\\.(ts|tsx|js)$"
+        "testRegex": "\\.test\\.(ts|tsx|js)$"
     },
     "author": "Van Nguyen <vnguyen94@gmail.com>",
     "license": "ISC",

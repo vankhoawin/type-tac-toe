@@ -93,7 +93,7 @@ export default class Logic {
         );
     }
 
-    private isSquareNotEmpty(square: E.Square) {
+    private isSquareNotEmpty(square: E.Square): boolean {
         return square !== E.Square.Empty;
     }
 }
