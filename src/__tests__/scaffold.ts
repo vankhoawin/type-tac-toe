@@ -1,16 +1,6 @@
 import * as E from '../enums';
 
 export default {
-    emptyState: [
-        [E.Square.Empty, E.Square.Empty, E.Square.Empty],
-        [E.Square.Empty, E.Square.Empty, E.Square.Empty],
-        [E.Square.Empty, E.Square.Empty, E.Square.Empty],
-    ],
-    filledState: [
-        [E.Square.X, E.Square.X, E.Square.X],
-        [E.Square.X, E.Square.X, E.Square.X],
-        [E.Square.X, E.Square.X, E.Square.X],
-    ],
     meta: {
         score: {
             [E.Turn.Player1]: 3,
@@ -36,10 +26,5 @@ export default {
         [E.Square.X, E.Square.O, E.Square.Empty],
         [E.Square.Empty, E.Square.X, E.Square.Empty],
         [E.Square.Empty, E.Square.Empty, E.Square.Empty],
-    ],
-    winningState: [
-        [E.Square.X, E.Square.O, E.Square.Empty],
-        [E.Square.Empty, E.Square.X, E.Square.Empty],
-        [E.Square.Empty, E.Square.Empty, E.Square.X],
     ],
 };

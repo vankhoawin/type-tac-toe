@@ -1,3 +1,4 @@
+import * as E from '../enums';
 import * as T from '../types';
 import View from '../view';
 import scaffold from './scaffold';
@@ -46,8 +47,15 @@ describe('View', () => {
     });
 
     it('renders a score subheader', () => {
-        element = view.renderSubheader(meta);
+        const turn: E.Turn = E.Turn.Player1;
 
+        element = view.renderSubheader({ status: E.Status.Draw, turn });
+        expect(element).toMatchSnapshot();
+
+        element = view.renderSubheader({ status: E.Status.InProgress, turn });
+        expect(element).toMatchSnapshot();
+
+        element = view.renderSubheader({ status: E.Status.Victory, turn });
         expect(element).toMatchSnapshot();
     });
 

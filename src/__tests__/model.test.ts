@@ -33,6 +33,15 @@ describe('Model', () => {
         expect(actual).toBe(expected);
     });
 
+    it('tests `setStatus`', () => {
+        const oldStatus: E.Status = model.status;
+        model.setStatus(E.Status.Victory);
+        actual = oldStatus === model.status;
+        expected = false;
+
+        expect(actual).toBe(expected);
+    });
+
     it('tests get `turn`', () => {
         actual = model.meta.turn === model.turn;
         expected = true;
@@ -40,10 +49,21 @@ describe('Model', () => {
         expect(actual).toBe(expected);
     });
 
-    it('tests set `status`', () => {
-        const oldTurn: E.Turn = model.turn;
-        model.turn = E.Turn.Player2;
-        actual = oldTurn === model.turn;
+    it('tests `toggleTurn`', () => {
+        let previousTurn: E.Turn = model.turn;
+
+        model.toggleTurn(previousTurn);
+
+        actual = previousTurn === model.turn;
+        expected = false;
+
+        expect(actual).toBe(expected);
+
+        previousTurn = model.turn;
+
+        model.toggleTurn(previousTurn);
+
+        actual = previousTurn === model.turn;
         expected = false;
 
         expect(actual).toBe(expected);
@@ -120,6 +140,22 @@ describe('Model', () => {
 
         actual = previousScore === model.getScoreForPlayer(player) - 1;
         expected = true;
+
+        expect(actual).toBe(expected);
+    });
+
+    it('tests `resetBoard`', () => {
+        const point: T.IPoint = { row: 0, col: 0 };
+        const square: E.Square = E.Square.O;
+
+        model.setSquare(point, square);
+
+        const previousSquare = model.getSquare(point);
+
+        model.resetBoard();
+
+        actual = previousSquare === model.getSquare(point);
+        expected = false;
 
         expect(actual).toBe(expected);
     });

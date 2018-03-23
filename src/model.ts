@@ -14,7 +14,7 @@ export default class Model {
     };
 
     constructor(config: T.IModelConfig) {
-        this.META.size = config.size || this.META.size;
+        this.META.size = config.size;
         this.STATE = this.getEmptyBoard();
     }
 
@@ -39,7 +39,7 @@ export default class Model {
         return this.META.status;
     }
 
-    public set status(status: E.Status) {
+    public setStatus(status: E.Status): void {
         this.META.status = status;
     }
 
@@ -47,8 +47,11 @@ export default class Model {
         return this.META.turn;
     }
 
-    public set turn(turn: E.Turn) {
-        this.META.turn = turn;
+    public toggleTurn(turn: E.Turn): void {
+        const newTurn = turn === E.Turn.Player1
+            ? E.Turn.Player2
+            : E.Turn.Player1;
+        this.META.turn = newTurn;
     }
 
     public get size(): number {
@@ -78,17 +81,6 @@ export default class Model {
 
     public resetBoard(): void {
         this.STATE = this.getEmptyBoard();
-    }
-
-    public setStatus(status: E.Status): void {
-        this.META.status = status;
-    }
-
-    public toggleTurn(turn: E.Turn): void {
-        const newTurn = turn === E.Turn.Player1
-            ? E.Turn.Player2
-            : E.Turn.Player1;
-        this.META.turn = newTurn;
     }
 
     private setScoreForPlayer(turn: E.Turn, newScore: number): void {

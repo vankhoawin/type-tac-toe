@@ -77,10 +77,10 @@ export default class TypeTacToe {
             newSquare,
             this.model.size,
         )) {
-            this.model.status = E.Status.Victory;
+            this.model.setStatus(E.Status.Victory);
             this.model.incrementScoreForPlayer(this.model.turn);
         } else if (this.logic.checkIfBoardIsFilled(this.model.state)) {
-            this.model.status = E.Status.Draw;
+            this.model.setStatus(E.Status.Draw);
         } else {
             this.model.toggleTurn(this.model.turn);
         }

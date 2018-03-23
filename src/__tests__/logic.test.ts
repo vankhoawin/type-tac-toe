@@ -19,7 +19,11 @@ describe('Logic', () => {
 
         expect(actual).toBe(expected);
 
-        const fullBoard: T.GameStateGrid = scaffold.filledState;
+        const fullBoard: T.GameStateGrid = [
+            [E.Square.X, E.Square.X, E.Square.X],
+            [E.Square.X, E.Square.X, E.Square.X],
+            [E.Square.X, E.Square.X, E.Square.X],
+        ];
         actual = logic.checkIfBoardIsFilled(fullBoard);
         expected = true;
 
@@ -27,26 +31,74 @@ describe('Logic', () => {
     });
 
     it('tests `checkWinningConditionsOfMove`', () => {
-        const move: T.IPoint = { row: 2, col: 2 };
-
+        const diagonalDownRightWin = [
+            [E.Square.X, E.Square.Empty, E.Square.Empty],
+            [E.Square.Empty, E.Square.X, E.Square.Empty],
+            [E.Square.Empty, E.Square.Empty, E.Square.X],
+        ];
         actual = logic.checkWinningConditionsOfMove(
-            scaffold.winningState,
-            move,
+            diagonalDownRightWin,
+            { row: 2, col: 2 },
             E.Square.X,
             scaffold.meta.size,
         );
         expected = true;
-
         expect(actual).toBe(expected);
 
+        const diagonalDownLeftWin = [
+            [E.Square.Empty, E.Square.Empty, E.Square.X],
+            [E.Square.Empty, E.Square.X, E.Square.Empty],
+            [E.Square.X, E.Square.Empty, E.Square.Empty],
+        ];
         actual = logic.checkWinningConditionsOfMove(
-            scaffold.emptyState,
-            move,
+            diagonalDownLeftWin,
+            { row: 2, col: 0 },
+            E.Square.X,
+            scaffold.meta.size,
+        );
+        expected = true;
+        expect(actual).toBe(expected);
+
+        const rowWin = [
+            [E.Square.X, E.Square.X, E.Square.X],
+            [E.Square.Empty, E.Square.Empty, E.Square.Empty],
+            [E.Square.Empty, E.Square.Empty, E.Square.Empty],
+        ];
+        actual = logic.checkWinningConditionsOfMove(
+            rowWin,
+            { row: 0, col: 1 },
+            E.Square.X,
+            scaffold.meta.size,
+        );
+        expected = true;
+        expect(actual).toBe(expected);
+
+        const columnWin = [
+            [E.Square.Empty, E.Square.Empty, E.Square.X],
+            [E.Square.Empty, E.Square.Empty, E.Square.X],
+            [E.Square.Empty, E.Square.Empty, E.Square.X],
+        ];
+        actual = logic.checkWinningConditionsOfMove(
+            columnWin,
+            { row: 0, col: 2 },
+            E.Square.X,
+            scaffold.meta.size,
+        );
+        expected = true;
+        expect(actual).toBe(expected);
+
+        const notWinningBoard = [
+            [E.Square.O, E.Square.X, E.Square.X],
+            [E.Square.Empty, E.Square.X, E.Square.O],
+            [E.Square.O, E.Square.O, E.Square.X],
+        ];
+        actual = logic.checkWinningConditionsOfMove(
+            notWinningBoard,
+            { row: 0, col: 2 },
             E.Square.X,
             scaffold.meta.size,
         );
         expected = false;
-
         expect(actual).toBe(expected);
     });
 
@@ -85,9 +137,14 @@ describe('Logic', () => {
     });
 
     it('tests `columnHasWinningMoves`', () => {
+        const winningState: T.GameStateGrid = [
+            [E.Square.X, E.Square.O, E.Square.Empty],
+            [E.Square.Empty, E.Square.X, E.Square.Empty],
+            [E.Square.Empty, E.Square.Empty, E.Square.X],
+        ];
         const winningMoves: T.IPoint[] = scaffold.moves.winning;
         actual = logic.columnHasWinningMoves(
-            scaffold.winningState,
+            winningState,
             winningMoves,
             scaffold.meta.turn,
             scaffold.meta.size,
