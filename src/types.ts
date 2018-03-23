@@ -37,3 +37,8 @@ export interface IGameEventHandlers {
     resetScore: (e: Event) => void;
     clickSquare: (e: Event) => void;
 }
+
+export interface IViewConfig {
+    selectors: IGameStateIdSelectors;
+    events: IGameEventHandlers;
+}

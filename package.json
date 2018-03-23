@@ -9,7 +9,7 @@
         "test": "jest",
         "lint": "yarn lint:css && yarn lint:js",
         "lint:css": "stylelint src/**/*.scss",
-        "lint:js": "tslint src/**/*.ts"
+        "lint:js": "tslint **/*.ts"
     },
     "jest": {
         "moduleFileExtensions": [
@@ -27,6 +27,7 @@
         "@types/clean-webpack-plugin": "^0.1.2",
         "@types/compression-webpack-plugin": "^0.4.2",
         "@types/html-webpack-plugin": "^2.30.3",
+        "@types/jest": "^22.2.2",
         "@types/webpack": "^4.1.1",
         "@types/webpack-dev-server": "^2.9.4",
         "awesome-typescript-loader": "^4.0.1",

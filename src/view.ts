@@ -1,16 +1,11 @@
 import * as E from './enums';
 import * as T from './types';
 
-interface IViewConfig {
-    selectors: T.IGameStateIdSelectors;
-    events: T.IGameEventHandlers;
-}
-
 export default class View {
     private $: T.IGameStateIdSelectors & T.IGameStateClassSelectors;
     private events: T.IGameEventHandlers;
 
-    constructor({ selectors, events }: IViewConfig) {
+    constructor({ selectors, events }: T.IViewConfig) {
        this.$ = selectors;
        this.events = events;
     }
