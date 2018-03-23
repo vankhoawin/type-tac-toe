@@ -9,13 +9,13 @@ const webpackServer = new WebpackDevServer(compiler, {
     hot: true,
 });
 
+/* tslint:disable:no-console */
 webpackServer.listen(config.PORT, (err /* , result */) => {
     if (err) {
-        // tslint:disable-next-line
         console.error(err);
         return;
     }
 
-    // tslint:disable-next-line
     console.log(`webpack dev server listening on: ${config.PORT}`);
 });
+/* tslint:enable:no-console */

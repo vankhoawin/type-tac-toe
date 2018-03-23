@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as webpack from 'webpack';
 import config from '../config';
 
-export default {
+const webpackConfig: webpack.Configuration = {
     context: path.resolve(__dirname, '..', 'src'),
     entry: [
         './index.ts',
@@ -54,3 +54,5 @@ export default {
         extensions: ['.js', '.ts', '.scss'],
     },
 };
+
+export default webpackConfig;

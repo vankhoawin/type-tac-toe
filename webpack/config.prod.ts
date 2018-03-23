@@ -4,7 +4,7 @@ import * as path from 'path';
 import webpack from 'webpack';
 import config from '../config';
 
-webpack({
+const webpackConfig: webpack.Configuration = {
     context: path.resolve(__dirname, '..', 'src'),
     entry: './index.ts',
     mode: 'production',
@@ -39,7 +39,7 @@ webpack({
     },
     output: {
         filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, '..', 'dist'),
     },
     plugins: [
         new HtmlWebPackPlugin({
@@ -49,9 +49,11 @@ webpack({
         new webpack.DefinePlugin({
             BOARD_SIZE: config.BOARD_SIZE,
         }),
-        new webpack.HotModuleReplacementPlugin(),
+        new CleanWebpackPlugin(path.resolve(__dirname, '..', 'dist')),
     ],
     resolve: {
         extensions: ['.js', '.ts', '.scss'],
     },
-});
+};
+
+export default webpackConfig;
