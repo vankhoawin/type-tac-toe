@@ -34,6 +34,10 @@ export default class View {
     }
 
     private attachEventListeners(): void {
+        if (!this.$.newGameButton || !this.$.resetButton || !this.$.board) {
+            return;
+        }
+
         this.$.newGameButton.addEventListener('click', this.events.startNewGame);
         this.$.resetButton.addEventListener('click', this.events.resetScore);
         this.$.board.addEventListener('click', this.events.clickSquare);

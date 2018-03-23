@@ -1,3 +1,4 @@
+import { JSDOM } from 'jsdom';
 import * as E from '../enums';
 import * as T from '../types';
 import View from '../view';
@@ -10,6 +11,7 @@ describe('View', () => {
     let startNewGameMock: jest.Mock;
     let resetScoreMock: jest.Mock;
     let clickSquareMock: jest.Mock;
+    let dom: JSDOM;
     let element: string;
 
     beforeEach(() => {
@@ -18,6 +20,8 @@ describe('View', () => {
         startNewGameMock = jest.fn();
         resetScoreMock = jest.fn();
         clickSquareMock = jest.fn();
+        dom = new JSDOM(scaffold.DOM);
+
         view = new View({
             events: {
                 clickSquare: clickSquareMock,
@@ -25,10 +29,99 @@ describe('View', () => {
                 startNewGame: startNewGameMock,
             },
             selectors: {
-                board: document.getElementById('.board')!,
-                toolbar: document.getElementById('.toolbar')!,
+                board: dom.window.document.getElementById('board')!,
+                toolbar: dom.window.document.getElementById('toolbar')!,
             },
         });
+    });
+
+    it('tests `renderGame`', () => {
+        // ensure dynamically created elements don't exist before initial render
+        expect(view.$.newGameButton).toBeUndefined();
+        expect(view.$.resetButton).toBeUndefined();
+        expect(view.$.squares).toBeUndefined();
+
+        view.renderGame(state, meta);
+
+        // use mock DOM to reassign correct selectors and reattach
+        view.$.newGameButton = dom.window.document.getElementById('js-new-button');
+        view.$.resetButton = dom.window.document.getElementById('js-reset-button');
+        view.$.squares = dom.window.document.getElementsByClassName('js-board-square');
+        view.attachEventListeners();
+
+        const newGameButton: HTMLElement = view.$.newGameButton;
+        const resetButton: HTMLElement = view.$.resetButton;
+        const squares: HTMLElement = view.$.squares;
+
+        expect(newGameButton).not.toBeUndefined();
+        expect(resetButton).not.toBeUndefined();
+        expect(squares).not.toBeUndefined();
+
+        newGameButton.click();
+        resetButton.click();
+        view.$.board.click();
+
+        expect(startNewGameMock).toHaveBeenCalled();
+        expect(resetScoreMock).toHaveBeenCalled();
+        expect(clickSquareMock).toHaveBeenCalled();
+    });
+
+    it('tests `attachEventListeners`', () => {
+        // should be no-op
+        view.attachEventListeners();
+
+        view.$.board.innerHTML = view.renderGrid(state);
+        view.$.toolbar.innerHTML = view.renderToolbar(meta);
+
+        view.$.newGameButton = dom.window.document.getElementById('js-new-button')!;
+        view.$.resetButton = dom.window.document.getElementById('js-reset-button')!;
+        view.$.squares = dom.window.document.getElementsByClassName('js-board-square')!;
+
+        view.attachEventListeners();
+
+        expect(startNewGameMock).not.toHaveBeenCalled();
+        view.$.newGameButton.click();
+        expect(startNewGameMock).toHaveBeenCalled();
+
+        expect(resetScoreMock).not.toHaveBeenCalled();
+        view.$.resetButton.click();
+        expect(resetScoreMock).toHaveBeenCalled();
+
+        expect(clickSquareMock).not.toHaveBeenCalled();
+        view.$.board.click();
+        expect(clickSquareMock).toHaveBeenCalled();
+    });
+
+    it('tests `removeEventListeners`', () => {
+        // should be no-op
+        view.removeEventListeners();
+
+        view.$.board.innerHTML = view.renderGrid(state);
+        view.$.toolbar.innerHTML = view.renderToolbar(meta);
+
+        view.$.newGameButton = dom.window.document.getElementById('js-new-button')!;
+        view.$.resetButton = dom.window.document.getElementById('js-reset-button')!;
+        view.$.squares = dom.window.document.getElementsByClassName('js-board-square')!;
+
+        view.attachEventListeners();
+
+        view.$.newGameButton.click();
+        view.$.resetButton.click();
+        view.$.board.click();
+
+        expect(startNewGameMock).toHaveBeenCalledTimes(1);
+        expect(resetScoreMock).toHaveBeenCalledTimes(1);
+        expect(clickSquareMock).toHaveBeenCalledTimes(1);
+
+        view.removeEventListeners();
+
+        view.$.newGameButton.click();
+        view.$.resetButton.click();
+        view.$.board.click();
+
+        expect(startNewGameMock).toHaveBeenCalledTimes(1);
+        expect(resetScoreMock).toHaveBeenCalledTimes(1);
+        expect(clickSquareMock).toHaveBeenCalledTimes(1);
     });
 
     ['X', 'O', 'empty'].forEach((squareType, index) => {

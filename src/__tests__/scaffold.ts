@@ -1,6 +1,15 @@
 import * as E from '../enums';
 
 export default {
+    DOM: `
+        <div id="app" class="app">
+            <header class="header">
+                <h1>Type-Tac-Toe</h1>
+            </header>
+            <div id="board" class="board"></div>
+            <div id="toolbar" class="toolbar"></div>
+        </div>
+    `,
     meta: {
         score: {
             [E.Turn.Player1]: 3,
