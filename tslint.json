@@ -8,5 +8,11 @@
         "quotemark": [true, "single"],
         "max-line-length": [true, 100]
     },
-    "rulesDirectory": []
+    "rulesDirectory": [],
+    "linterOptions": {
+        "exclude": [
+            "node_modules",
+            "dist"
+        ]
+    }
 }

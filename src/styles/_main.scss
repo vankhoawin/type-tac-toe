@@ -2,21 +2,21 @@
 
 html,
 body {
-  height: 100%;
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  margin: 0;
+    height: 100%;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    margin: 0;
 }
 
 .app {
-  min-height: 100%;
-  display: grid;
-  grid-template-rows: [header] auto [board] 1fr [toolbar] auto;
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: [header] auto [board] 1fr [toolbar] auto;
 }
 
 .header {
-  @include component();
+    @include component();
 
-  text-align: center;
-  color: $font-color;
+    text-align: center;
+    color: $font-color;
 }

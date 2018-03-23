@@ -2,55 +2,55 @@
 @import 'mixins';
 
 .toolbar {
-  @include component();
+    @include component();
 
-  display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
-  color: $font-color;
-
-  @include breakpoint('small') {
-    grid-template-rows: none;
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-
-  &__subheader {
-    display: flex;
-    justify-content: center;
-    margin: 0;
-  }
-
-  &__score-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    color: $font-color;
 
     @include breakpoint('small') {
-      flex-direction: column;
+        grid-template-rows: none;
+        grid-template-columns: 1fr 1fr 1fr;
     }
-  }
 
-  &__score {
-    display: flex;
-  }
-
-  &__button-container {
-    display: flex;
-    justify-content: center;
-
-    & > button:first-child {
-      margin-right: 10px;
+    &__subheader {
+        display: flex;
+        justify-content: center;
+        margin: 0;
     }
-  }
 
-  &__button {
-    @include button-color($button-color);
+    &__score-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
 
-    color: #222;
-    border: 0;
-    font-size: 16px;
-    padding: 15px 20px;
-    cursor: pointer;
-    outline: none;
-  }
+        @include breakpoint('small') {
+            flex-direction: column;
+        }
+    }
+
+    &__score {
+        display: flex;
+    }
+
+    &__button-container {
+        display: flex;
+        justify-content: center;
+
+        & > button:first-child {
+            margin-right: 10px;
+        }
+    }
+
+    &__button {
+        @include button-color($button-color);
+
+        color: #222;
+        border: 0;
+        font-size: 16px;
+        padding: 15px 20px;
+        cursor: pointer;
+        outline: none;
+    }
 }

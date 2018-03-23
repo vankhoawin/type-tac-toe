@@ -8,6 +8,7 @@
                 "if",
                 "content"
             ]
-        }]
+        }],
+        "indentation": 4
     }
 }

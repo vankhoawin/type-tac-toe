@@ -1,27 +1,27 @@
 @import 'variables';
 
 @mixin breakpoint($breakpoint) {
-  @if map-has-key($breakpoints, $breakpoint) {
-    @media #{inspect(map-get($breakpoints, $breakpoint))} {
-      @content;
+    @if map-has-key($breakpoints, $breakpoint) {
+        @media #{inspect(map-get($breakpoints, $breakpoint))} {
+            @content;
+        }
     }
-  }
 }
 
 @mixin component() {
-  padding: 10px;
-  background-color: $background-color-main;
+    padding: 10px;
+    background-color: $background-color-main;
 }
 
 @mixin button-color($color) {
-  background-color: $color;
+    background-color: $color;
 
-  &:hover,
-  &:focus {
-    background-color: lighten($color, 10%);
-  }
+    &:hover,
+    &:focus {
+        background-color: lighten($color, 10%);
+    }
 
-  &:active {
-    background-color: darken($color, 5%);
-  }
+    &:active {
+        background-color: darken($color, 5%);
+    }
 }
