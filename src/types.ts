@@ -1,6 +1,5 @@
 import * as E from './enums';
 
-export type CurrentStatus = E.Status.Draw | E.Status.Victory | E.Status.InProgress;
 export type GameStateSquare = E.Square.Empty | E.Square.X | E.Square.O;
 export type GameStateRow = GameStateSquare[];
 export type GameStateGrid = GameStateRow[];
@@ -23,7 +22,7 @@ export interface IGameStateClassSelectors {
 }
 
 export interface IGameStateMeta {
-    status: CurrentStatus;
+    status: E.Status;
     turn: E.Turn;
     score: {
         [E.Turn.Player1]: number,
@@ -36,6 +35,11 @@ export interface IGameEventHandlers {
     startNewGame: (e: Event) => void;
     resetScore: (e: Event) => void;
     clickSquare: (e: Event) => void;
+}
+
+export interface ITypeTacToeConfig {
+    model: IModelConfig;
+    selectors: IGameStateIdSelectors;
 }
 
 export interface IViewConfig {

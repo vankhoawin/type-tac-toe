@@ -4,17 +4,12 @@ import Model from './model';
 import * as T from './types';
 import View from './view';
 
-interface IControllerConfig {
-    model: T.IModelConfig;
-    selectors: T.IGameStateIdSelectors;
-}
-
 export default class TypeTacToe {
     private model: Model;
     private view: View;
     private logic: Logic;
 
-    constructor(config: IControllerConfig) {
+    constructor(config: T.ITypeTacToeConfig) {
         this.model = new Model(config.model);
         this.view = new View({
             events: {
@@ -35,14 +30,14 @@ export default class TypeTacToe {
         e.preventDefault();
         this.model.resetBoard();
         this.model.setStatus(E.Status.InProgress);
+        this.model.toggleTurn(this.model.turn);
         this.rerender();
     }
 
     private onClickResetScoreHandler(e: Event): void {
-        e.preventDefault();
         this.model.resetScoreForPlayer(E.Turn.Player1);
         this.model.resetScoreForPlayer(E.Turn.Player2);
-        this.rerender();
+        this.onClickNewGameHandler(e);
     }
 
     private onClickGridSquareHandler(e: Event): void {

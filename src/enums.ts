@@ -4,13 +4,13 @@ export enum Turn {
 }
 
 export enum Status {
-    InProgress = 0,
-    Victory = 1,
-    Draw = 2,
+    InProgress,
+    Victory,
+    Draw,
 }
 
 export enum Square {
-    Empty = 0,
-    X = 1,
-    O = 2,
+    Empty,
+    X,
+    O,
 }

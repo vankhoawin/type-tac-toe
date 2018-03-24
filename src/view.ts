@@ -43,14 +43,14 @@ export default class View {
         this.$.board.addEventListener('click', this.events.clickSquare);
     }
 
-    private renderSquare(type: E.Square, rowIndex: number, colIndex: number): string {
+    private renderSquare(square: E.Square, rowIndex: number, colIndex: number): string {
         const commonClasses = 'js-board-square board__square board__square';
         const row = `data-row=${rowIndex}`;
         const col = `data-col=${colIndex}`;
 
-        if (type === E.Square.X) {
+        if (square === E.Square.X) {
             return `<button ${row} ${col} class="${commonClasses}--X">X</button>`;
-        } else if (type === E.Square.O) {
+        } else if (square === E.Square.O) {
             return `<button ${row} ${col} class="${commonClasses}--O">O</button>`;
         } else {
             return `<button ${row} ${col} class="${commonClasses}--empty"></button>`;
