@@ -16,22 +16,15 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
-
-        // &--is-current-turn {
-
-        // }
+        margin: 10px;
 
         &:last-child {
-            &::before,
             &::after {
                 content: '';
                 display: block;
                 position: absolute;
                 transition: left 1s ease;
-            }
-
-            &::after {
-                background: yellow;
+                background: $player-indicator-color;
                 bottom: 0;
                 height: 5px;
                 left: 0;
@@ -50,11 +43,12 @@
     }
 
     &__player-title {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
     }
 
     &__score {
-        font-size: 2rem;
+        font-size: 3rem;
+        margin-top: 10px;
 
         &--1 {
             color: $background-color-square-X;

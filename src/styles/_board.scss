@@ -9,6 +9,11 @@
     grid-template: repeat($board-size, 1fr) / repeat($board-size, 1fr);
     grid-gap: 10px;
 
+    @include breakpoint('small') {
+        width: 80vh;
+        margin: 0 auto;
+    }
+
     &__square {
         display: flex;
         justify-content: center;
@@ -34,7 +39,7 @@
             &:hover,
             &:focus {
                 cursor: pointer;
-                box-shadow: 0 10px 6px -6px darken($background-color-square-empty, 10%);
+                box-shadow: 0 0 6px 6px darken($background-color-square-empty, 7%);
             }
         }
 

@@ -1,10 +1,11 @@
-$background-color-main: hsl(210, 29%, 24%);
+$background-color-main: #2b3d4e;
 $background-color-square-empty: #34495e;
-$background-color-square-X: #aa4139;
-$background-color-square-O: #625ada;
+$background-color-square-X: #ce6a69;
+$background-color-square-O: #759fbc;
 $button-color: #c4bbaf;
 $font-color: #bbb;
 $font-grey-color: #bbb;
+$player-indicator-color: #ffe381;
 
 $breakpoints: (
     'small':  ( min-width:  767px ),
