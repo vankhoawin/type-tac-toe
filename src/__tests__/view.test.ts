@@ -20,7 +20,7 @@ describe('View', () => {
         startNewGameMock = jest.fn();
         resetScoreMock = jest.fn();
         clickSquareMock = jest.fn();
-        dom = new JSDOM(scaffold.DOM);
+        dom = new JSDOM(scaffold.dom);
 
         view = new View({
             events: {
