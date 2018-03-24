@@ -54,9 +54,17 @@ export default class View {
         }
 
         if (square === E.Square.X) {
-            return `<button ${sRow} ${sCol} class="${commonClasses}--X">X</button>`;
+            return `
+                <button ${sRow} ${sCol} class="${commonClasses}--X">
+                    <span>X</span>
+                </button>
+            `;
         } else if (square === E.Square.O) {
-            return `<button ${sRow} ${sCol} class="${commonClasses}--O">O</button>`;
+            return `
+                <button ${sRow} ${sCol} class="${commonClasses}--O">
+                    <span>O</span>
+                </button>
+            `;
         } else {
             return `<button ${sRow} ${sCol} class="${commonClasses}--empty"></button>`;
         }

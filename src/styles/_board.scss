@@ -17,6 +17,7 @@
         border: 0;
         font-size: 2rem;
         color: $font-color;
+        transition: all 300ms;
 
         &:hover,
         &:focus {
@@ -29,6 +30,7 @@
             &:hover,
             &:focus {
                 cursor: pointer;
+                box-shadow: 0 10px 6px -6px darken($background-color-square-empty, 10%);
             }
         }
 
@@ -41,8 +43,10 @@
         }
 
         &--is-last-moved {
-            animation: swing 1s ease;
-            animation-iteration-count: 1;
+            span {
+                animation: bounce 1s ease;
+                animation-iteration-count: 1;
+            }
         }
     }
 }
