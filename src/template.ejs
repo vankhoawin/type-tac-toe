@@ -9,12 +9,12 @@
     <meta name="description" content="type-tac-toe">
     <meta name="keywords" content="typescript, tic, tac, toe, webpack 4">
 </head>
-<body>
+<body data-is-modal-open="true">
     <div id="app" class="app">
         <header class="header">
             <button
-                id="js-new-button"
-                class="header__new-game-button"
+                id="js-reset-game-button"
+                class="new-game-button new-game-button--header"
                 type="button"
             >
                 New Game
@@ -40,15 +40,25 @@
             </div>
         </div>
     </div>
+
+    <div id="modal" class="modal">
+        <h2 id="js-modal-title" class="modal__title"></h2>
+        <button
+            id="js-modal-new-game-button"
+            class="new-game-button"
+            type="button"
+        >
+            Play again?
+        </button>
+    </div>
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=<%- htmlWebpackPlugin.options.GA_ANALYTICS %>"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', '<%- htmlWebpackPlugin.options.GA_ANALYTICS %>');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '<%- htmlWebpackPlugin.options.GA_ANALYTICS %>');
     </script>
-
 </body>
 </html>

@@ -11,7 +11,7 @@ export default class Scaffold {
         <div id="app" class="app">
             <header class="header">
                 <button
-                    id="js-new-button"
+                    id="js-reset-game-button"
                     class="header__new-game-button"
                     type="button"
                 >

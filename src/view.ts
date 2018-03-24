@@ -9,7 +9,8 @@ export default class View {
        this.$ = selectors;
        this.events = events;
 
-       this.$.newGameButton.addEventListener('click', this.events.startNewGame);
+       this.$.modalNewGameButton.addEventListener('click', this.events.startNewGame);
+       this.$.resetGameButton.addEventListener('click', this.events.startNewGame);
     }
 
     public renderGame(state: T.GameStateGrid, meta: T.IGameStateMeta): void {
@@ -17,9 +18,29 @@ export default class View {
 
         this.removeBoardEventListener();
         // add dynamically created selectors
-        this.$.newGameButton = document.getElementById('js-new-button')!;
         this.$.squares = document.getElementsByClassName('js-board-square')!;
         this.attachBoardEventListener();
+    }
+
+    public toggleModal(meta: T.IGameStateMeta): void {
+        if (meta.status !== E.Status.InProgress) {
+            this.$.body.setAttribute('data-is-modal-open', 'true');
+            this.setModalTitle(meta);
+        } else {
+            this.$.body.removeAttribute('data-is-modal-open');
+        }
+    }
+
+    public setModalTitle(meta: T.IGameStateMeta): void {
+        let modalTitle: string = '';
+
+        if (meta.status === E.Status.Draw) {
+            modalTitle = `It's a draw!`;
+        } else if (meta.status === E.Status.Victory) {
+            modalTitle = `Player ${meta.turn} wins!`;
+        }
+
+        this.$.modalTitle.innerText = modalTitle;
     }
 
     public toggleTurn(turn: E.Turn): void {
@@ -84,16 +105,6 @@ export default class View {
         ), '');
 
         return html;
-    }
-
-    private renderSubheader(meta: T.IGameStateMeta): string {
-        if (meta.status === E.Status.Draw) {
-            return `Draw!`;
-        } else if (meta.status === E.Status.Victory) {
-            return `Player ${meta.turn} wins!`;
-        }
-
-        return `Player ${meta.turn}'s turn.`;
     }
 
     private renderScore(meta: T.IGameStateMeta, player: E.Turn): string {

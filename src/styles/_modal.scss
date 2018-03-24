@@ -1,0 +1,43 @@
+.modal {
+    visibility: hidden;
+    display: flex;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    color: $font-grey-color;
+    opacity: 0;
+
+    &__title {
+        font-size: 4rem;
+    }
+
+    .new-game-button {
+        font-size: 2rem;
+    }
+}
+
+.app {
+    filter: brightness(1);
+}
+
+body[data-is-modal-open="true"] {
+    .app,
+    .modal {
+        transition: 1s all linear;
+        transition-delay: 1s;
+    }
+
+    .app {
+        filter: brightness(0.4);
+    }
+
+    .modal {
+        visibility: visible;
+        opacity: 1;
+    }
+}

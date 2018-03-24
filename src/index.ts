@@ -6,17 +6,25 @@ import './styles/index.scss';
 const modelConfig = {
     size: config.BOARD_SIZE,
 };
+const $body: HTMLElement = document.body;
 const $board: HTMLElement = document.getElementById('board')!;
-const $newGameButton: HTMLElement = document.getElementById('js-new-button')!;
+const $modal: HTMLElement = document.getElementById('modal')!;
+const $modalNewGameButton: HTMLElement = document.getElementById('js-modal-new-game-button')!;
+const $modalTitle: HTMLElement = document.getElementById('js-modal-title')!;
+const $resetGameButton: HTMLElement = document.getElementById('js-reset-game-button')!;
 const $player1ScoreContainer: HTMLElement = document.getElementById('player-1-score-container')!;
 const $player2ScoreContainer: HTMLElement = document.getElementById('player-2-score-container')!;
 const gameState = new TypeTacToe({
     model: modelConfig,
     selectors: {
         board: $board,
-        newGameButton: $newGameButton,
+        body: $body,
+        modal: $modal,
+        modalNewGameButton: $modalNewGameButton,
+        modalTitle: $modalTitle,
         player1ScoreContainer: $player1ScoreContainer,
         player2ScoreContainer: $player2ScoreContainer,
+        resetGameButton: $resetGameButton,
     },
 });
 

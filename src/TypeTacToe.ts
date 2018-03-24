@@ -22,6 +22,7 @@ export default class TypeTacToe {
     }
 
     public rerender(): void {
+        this.view.toggleModal(this.model.meta);
         this.view.renderGame(this.model.state, this.model.meta);
     }
 

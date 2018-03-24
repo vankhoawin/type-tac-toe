@@ -27,13 +27,14 @@ describe('View', () => {
             },
             selectors: {
                 board: dom.window.document.getElementById('board')!,
-                newGameButton: dom.window.document.getElementById('js-new-button')!,
+                modalNewGameButton: dom.window.document.getElementById('js-modal-new-game-button')!,
                 player1ScoreContainer: dom.window.document.getElementById(
                     'player-1-score-container',
                 )!,
                 player2ScoreContainer: dom.window.document.getElementById(
                     'player-2-score-container',
                 )!,
+                resetGameButton: dom.window.document.getElementById('js-reset-game-button')!,
             },
         });
     });
@@ -102,19 +103,6 @@ describe('View', () => {
     it('renders a grid', () => {
         element = view.renderGrid(state, meta);
 
-        expect(element).toMatchSnapshot();
-    });
-
-    it('renders a score subheader', () => {
-        const turn: E.Turn = E.Turn.Player1;
-
-        element = view.renderSubheader({ status: E.Status.Draw, turn });
-        expect(element).toMatchSnapshot();
-
-        element = view.renderSubheader({ status: E.Status.InProgress, turn });
-        expect(element).toMatchSnapshot();
-
-        element = view.renderSubheader({ status: E.Status.Victory, turn });
         expect(element).toMatchSnapshot();
     });
 

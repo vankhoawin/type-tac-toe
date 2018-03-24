@@ -15,32 +15,35 @@ body {
     grid-template-rows: [header] auto [board] 1fr [toolbar] auto;
 }
 
+.new-game-button {
+    border: 0;
+    color: $font-grey-color;
+    background-color: inherit;
+    padding: 0;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+
+    &:hover,
+    &:focus {
+        color: lighten($font-grey-color, 10%);
+    }
+
+    &:active {
+        color: darken($font-grey-color, 5%);
+    }
+
+    &--header {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+    }
+}
+
 .header {
     @include component();
 
     position: relative;
     text-align: center;
     color: $font-color;
-
-    &__new-game-button {
-        position: absolute;
-        top: 15px;
-        left: 15px;
-        border: 0;
-        color: $font-grey-color;
-        background-color: inherit;
-        padding: 0;
-        font-size: 16px;
-        cursor: pointer;
-        outline: none;
-
-        &:hover,
-        &:focus {
-            color: lighten($font-grey-color, 10%);
-        }
-
-        &:active {
-            color: darken($font-grey-color, 5%);
-        }
-    }
 }
