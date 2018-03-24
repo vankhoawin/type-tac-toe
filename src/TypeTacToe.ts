@@ -14,7 +14,6 @@ export default class TypeTacToe {
         this.view = new View({
             events: {
                 clickSquare: this.onClickGridSquareHandler.bind(this),
-                resetScore: this.onClickResetScoreHandler.bind(this),
                 startNewGame: this.onClickNewGameHandler.bind(this),
             },
             selectors: config.selectors,
@@ -32,13 +31,8 @@ export default class TypeTacToe {
         this.model.resetLastMove();
         this.model.setStatus(E.Status.InProgress);
         this.model.toggleTurn(this.model.turn);
+        this.view.toggleTurn(this.model.turn);
         this.rerender();
-    }
-
-    private onClickResetScoreHandler(e: Event): void {
-        this.model.resetScoreForPlayer(E.Turn.Player1);
-        this.model.resetScoreForPlayer(E.Turn.Player2);
-        this.onClickNewGameHandler(e);
     }
 
     private onClickGridSquareHandler(e: Event): void {
@@ -79,6 +73,7 @@ export default class TypeTacToe {
             this.model.setStatus(E.Status.Draw);
         } else {
             this.model.toggleTurn(this.model.turn);
+            this.view.toggleTurn(this.model.turn);
         }
 
         this.rerender();

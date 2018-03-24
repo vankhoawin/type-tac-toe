@@ -34,7 +34,6 @@ export interface IGameStateMeta {
 
 export interface IGameEventHandlers {
     startNewGame: (e: Event) => void;
-    resetScore: (e: Event) => void;
     clickSquare: (e: Event) => void;
 }
 

@@ -5,52 +5,63 @@
     @include component();
 
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 50px;
+    position: relative;
+    z-index: 0;
     color: $font-color;
-
-    @include breakpoint('small') {
-        grid-template-rows: none;
-        grid-template-columns: 1fr 1fr 1fr;
-    }
-
-    &__subheader {
-        display: flex;
-        justify-content: center;
-        margin: 0;
-    }
 
     &__score-container {
         display: flex;
-        flex-direction: row;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
 
-        @include breakpoint('small') {
-            flex-direction: column;
+        // &--is-current-turn {
+
+        // }
+
+        &:last-child {
+            &::before,
+            &::after {
+                content: '';
+                display: block;
+                position: absolute;
+                transition: left 1s ease;
+            }
+
+            &::after {
+                background: yellow;
+                bottom: 0;
+                height: 5px;
+                left: 0;
+                width: 50%;
+                z-index: -1;
+            }
         }
+
+        &:nth-child(1)[data-is-current-turn="true"] ~ &:last-child::after {
+            left: 0;
+        }
+
+        &:nth-child(2)[data-is-current-turn="true"]::after {
+            left: 50%;
+        }
+    }
+
+    &__player-title {
+        font-size: 1.3rem;
     }
 
     &__score {
-        display: flex;
-    }
+        font-size: 2rem;
 
-    &__button-container {
-        display: flex;
-        justify-content: center;
-
-        & > button:first-child {
-            margin-right: 10px;
+        &--1 {
+            color: $background-color-square-X;
         }
-    }
 
-    &__button {
-        @include button-color($button-color);
-
-        color: #222;
-        border: 0;
-        font-size: 16px;
-        padding: 15px 20px;
-        cursor: pointer;
-        outline: none;
+        &--2 {
+            color: $background-color-square-O;
+        }
     }
 }

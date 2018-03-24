@@ -15,9 +15,13 @@
         align-items: center;
         padding: 0;
         border: 0;
-        font-size: 2rem;
         color: $font-color;
         transition: all 300ms;
+        font-size: 4rem;
+
+        @include breakpoint('small') {
+            font-size: 8rem;
+        }
 
         &:hover,
         &:focus {

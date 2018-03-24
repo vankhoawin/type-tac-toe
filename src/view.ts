@@ -8,38 +8,44 @@ export default class View {
     constructor({ selectors, events }: T.IViewConfig) {
        this.$ = selectors;
        this.events = events;
+
+       this.$.newGameButton.addEventListener('click', this.events.startNewGame);
     }
 
     public renderGame(state: T.GameStateGrid, meta: T.IGameStateMeta): void {
         this.$.board.innerHTML = this.renderGrid(state, meta.lastMove);
-        this.$.toolbar.innerHTML = this.renderToolbar(meta);
 
-        this.removeEventListeners();
+        this.removeBoardEventListener();
         // add dynamically created selectors
         this.$.newGameButton = document.getElementById('js-new-button')!;
-        this.$.resetButton = document.getElementById('js-reset-button')!;
         this.$.squares = document.getElementsByClassName('js-board-square')!;
-        this.attachEventListeners();
+        this.attachBoardEventListener();
     }
 
-    private removeEventListeners(): void {
+    public toggleTurn(turn: E.Turn): void {
+        if (turn === E.Turn.Player1) {
+            this.$.player1ScoreContainer.setAttribute('data-is-current-turn', 'true');
+            this.$.player2ScoreContainer.removeAttribute('data-is-current-turn');
+        } else {
+            this.$.player1ScoreContainer.removeAttribute('data-is-current-turn');
+            this.$.player2ScoreContainer.setAttribute('data-is-current-turn', 'true');
+        }
+    }
+
+    private removeBoardEventListener(): void {
         // on first run, dynamically created selectors do not exist
-        if (!this.$.newGameButton || !this.$.resetButton || !this.$.board) {
+        if (!this.$.board) {
             return;
         }
 
-        this.$.newGameButton.removeEventListener('click', this.events.startNewGame);
-        this.$.resetButton.removeEventListener('click', this.events.resetScore);
         this.$.board.removeEventListener('click', this.events.clickSquare);
     }
 
-    private attachEventListeners(): void {
-        if (!this.$.newGameButton || !this.$.resetButton || !this.$.board) {
+    private attachBoardEventListener(): void {
+        if (!this.$.board) {
             return;
         }
 
-        this.$.newGameButton.addEventListener('click', this.events.startNewGame);
-        this.$.resetButton.addEventListener('click', this.events.resetScore);
         this.$.board.addEventListener('click', this.events.clickSquare);
     }
 
@@ -90,49 +96,17 @@ export default class View {
         return `Player ${meta.turn}'s turn.`;
     }
 
-    private renderScore(player: E.Turn, score: number): string {
+    private renderScore(meta: T.IGameStateMeta, player: E.Turn): string {
+        const score: number = meta.score[player];
+        const isPlayerCurrentTurn = meta.turn === player
+            ? ' toolbar__score-container--is-current-turn'
+            : '';
+
         return `
-            <div class="toolbar__score">
-                Player ${player}: ${score}
+            <div class="toolbar__score-container${isPlayerCurrentTurn}">
+                <div>Player ${player}</div>
+                <div class="toolbar__player-${player}-score">${score}</div>
             </div>
         `;
-    }
-
-    private renderToolbarButtons(): string {
-        return `
-            <div class="toolbar__button-container">
-                <button
-                    id="js-new-button"
-                    class="toolbar__button"
-                    type="button"
-                >
-                    New Game
-                </button>
-                <button
-                    id="js-reset-button"
-                    class="toolbar__button"
-                    type="button"
-                >
-                    Reset Score
-                </button>
-            </div>
-        `;
-    }
-
-    private renderToolbar(meta: T.IGameStateMeta): string {
-        const turn: string = `
-            <h2 class="toolbar__subheader">
-                ${this.renderSubheader(meta)}
-            </h2>
-        `;
-        const score: string = `
-            <div class="toolbar__score-container">
-                ${this.renderScore(E.Turn.Player1, meta.score[E.Turn.Player1])}
-                ${this.renderScore(E.Turn.Player2, meta.score[E.Turn.Player2])}
-            </div>
-        `;
-        const toolbar: string = this.renderToolbarButtons();
-
-        return score + turn + toolbar;
     }
 }

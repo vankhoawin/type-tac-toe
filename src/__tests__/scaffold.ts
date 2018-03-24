@@ -10,10 +10,33 @@ export default class Scaffold {
     private static DOM: string = `
         <div id="app" class="app">
             <header class="header">
+                <button
+                    id="js-new-button"
+                    class="header__new-game-button"
+                    type="button"
+                >
+                    New Game
+                </button>
                 <h1>Type-Tac-Toe</h1>
             </header>
             <div id="board" class="board"></div>
-            <div id="toolbar" class="toolbar"></div>
+            <div id="toolbar" class="toolbar">
+                <div
+                    id="player-1-score-container"
+                    class="toolbar__score-container"
+                    data-is-current-turn="true"
+                >
+                    <div class="toolbar__player-title">Player 1</div>
+                    <div class="toolbar__score toolbar__score--1">0</div>
+                </div>
+                <div
+                    id="player-2-score-container"
+                    class="toolbar__score-container"
+                >
+                    <div class="toolbar__player-title">Player 2</div>
+                    <div class="toolbar__score toolbar__score--2">0</div>
+                </div>
+            </div>
         </div>
     `;
 

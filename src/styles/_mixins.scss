@@ -10,7 +10,6 @@
 
 @mixin component() {
     padding: 10px;
-    background-color: $background-color-main;
 }
 
 @mixin button-color($color) {

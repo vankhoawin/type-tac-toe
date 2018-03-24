@@ -1,11 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`View renders a grid 1`] = `"<button data-row=0 data-col=0 class=\\"js-board-square board__square board__square--X\\">X</button><button data-row=0 data-col=1 class=\\"js-board-square board__square board__square--O\\">O</button><button data-row=0 data-col=2 class=\\"js-board-square board__square board__square--empty\\"></button><button data-row=1 data-col=0 class=\\"js-board-square board__square board__square--empty\\"></button><button data-row=1 data-col=1 class=\\"js-board-square board__square board__square--X\\">X</button><button data-row=1 data-col=2 class=\\"js-board-square board__square board__square--empty\\"></button><button data-row=2 data-col=0 class=\\"js-board-square board__square board__square--empty\\"></button><button data-row=2 data-col=1 class=\\"js-board-square board__square board__square--empty\\"></button><button data-row=2 data-col=2 class=\\"js-board-square board__square board__square--empty\\"></button>"`;
+exports[`View renders a grid 1`] = `
+"
+                <button data-row=0 data-col=0 class=\\"js-board-square board__square board__square--X\\">
+                    <span>X</span>
+                </button>
+            
+                <button data-row=0 data-col=1 class=\\"js-board-square board__square board__square--O\\">
+                    <span>O</span>
+                </button>
+            <button data-row=0 data-col=2 class=\\"js-board-square board__square board__square--empty\\"></button><button data-row=1 data-col=0 class=\\"js-board-square board__square board__square--empty\\"></button>
+                <button data-row=1 data-col=1 class=\\"js-board-square board__square board__square--X\\">
+                    <span>X</span>
+                </button>
+            <button data-row=1 data-col=2 class=\\"js-board-square board__square board__square--empty\\"></button><button data-row=2 data-col=0 class=\\"js-board-square board__square board__square--empty\\"></button><button data-row=2 data-col=1 class=\\"js-board-square board__square board__square--empty\\"></button><button data-row=2 data-col=2 class=\\"js-board-square board__square board__square--empty\\"></button>"
+`;
 
 exports[`View renders a score container 1`] = `
 "
-            <div class=\\"toolbar__score\\">
-                Player 1: 3
+            <div class=\\"toolbar__score-container\\">
+                <div>Player 3</div>
+                <div class=\\"toolbar__player-3-score\\">undefined</div>
             </div>
         "
 `;
@@ -16,67 +31,20 @@ exports[`View renders a score subheader 2`] = `"Player 1's turn."`;
 
 exports[`View renders a score subheader 3`] = `"Player 1 wins!"`;
 
-exports[`View renders a toolbar 1`] = `
+exports[`View renders an O square 1`] = `
 "
-            <div class=\\"toolbar__score-container\\">
-                
-            <div class=\\"toolbar__score\\">
-                Player 1: 3
-            </div>
-        
-                
-            <div class=\\"toolbar__score\\">
-                Player 2: 2
-            </div>
-        
-            </div>
-        
-            <h2 class=\\"toolbar__subheader\\">
-                Player 1's turn.
-            </h2>
-        
-            <div class=\\"toolbar__button-container\\">
-                <button
-                    id=\\"js-new-button\\"
-                    class=\\"toolbar__button\\"
-                    type=\\"button\\"
-                >
-                    New Game
+                <button data-row=undefined data-col=undefined class=\\"board__square--is-last-moved js-board-square board__square board__square--O\\">
+                    <span>O</span>
                 </button>
-                <button
-                    id=\\"js-reset-button\\"
-                    class=\\"toolbar__button\\"
-                    type=\\"button\\"
-                >
-                    Reset Score
-                </button>
-            </div>
-        "
+            "
 `;
 
-exports[`View renders an O square 1`] = `"<button data-row=undefined data-col=undefined class=\\"board__square--is-last-moved js-board-square board__square board__square--O\\">O</button>"`;
-
-exports[`View renders an X square 1`] = `"<button data-row=undefined data-col=undefined class=\\"board__square--is-last-moved js-board-square board__square board__square--X\\">X</button>"`;
+exports[`View renders an X square 1`] = `
+"
+                <button data-row=undefined data-col=undefined class=\\"board__square--is-last-moved js-board-square board__square board__square--X\\">
+                    <span>X</span>
+                </button>
+            "
+`;
 
 exports[`View renders an empty square 1`] = `"<button data-row=undefined data-col=undefined class=\\"board__square--is-last-moved js-board-square board__square board__square--empty\\"></button>"`;
-
-exports[`View renders toolbar buttons 1`] = `
-"
-            <div class=\\"toolbar__button-container\\">
-                <button
-                    id=\\"js-new-button\\"
-                    class=\\"toolbar__button\\"
-                    type=\\"button\\"
-                >
-                    New Game
-                </button>
-                <button
-                    id=\\"js-reset-button\\"
-                    class=\\"toolbar__button\\"
-                    type=\\"button\\"
-                >
-                    Reset Score
-                </button>
-            </div>
-        "
-`;
