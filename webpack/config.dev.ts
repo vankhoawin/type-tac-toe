@@ -14,6 +14,11 @@ const webpackDevConfig: webpack.Configuration = {
     mode: 'development',
     plugins: [
         ...webpackCommonConfig.plugins as webpack.Plugin[],
+        new HtmlWebPackPlugin({
+            GA_ANALYTICS: config.GA_ANALYTICS,
+            filename: 'index.html',
+            template: 'template.ejs',
+        }),
         new webpack.HotModuleReplacementPlugin(),
     ],
 };

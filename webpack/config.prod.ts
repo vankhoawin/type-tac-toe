@@ -15,6 +15,16 @@ const webpackProdConfig: webpack.Configuration = {
     },
     plugins: [
         ...webpackCommonConfig.plugins as webpack.Plugin[],
+        new HtmlWebPackPlugin({
+            GA_ANALYTICS: config.GA_ANALYTICS,
+            filename: 'index.html',
+            minify: {
+                collapseWhitespace: true,
+                conservativeCollapse: true,
+                removeComments: true,
+            },
+            template: 'template.ejs',
+        }),
         new CleanWebpackPlugin(path.resolve(__dirname, '..', 'dist')),
         new CompressionPlugin({
             algorithm: 'gzip',

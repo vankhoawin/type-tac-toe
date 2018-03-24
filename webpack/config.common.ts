@@ -38,14 +38,6 @@ const webpackCommonConfig: webpack.Configuration = {
         ],
     },
     plugins: [
-        new HtmlWebPackPlugin({
-            GA_ANALYTICS_ID: config.GA_ANALYTICS_ID,
-            filename: 'index.html',
-            template: 'index.ejs',
-        }),
-        new webpack.DefinePlugin({
-            BOARD_SIZE: config.BOARD_SIZE,
-        }),
     ],
     resolve: {
         extensions: ['.js', '.ts', '.scss'],
