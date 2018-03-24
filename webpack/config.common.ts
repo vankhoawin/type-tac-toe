@@ -28,6 +28,16 @@ const webpackCommonConfig: webpack.Configuration = {
                     { loader: 'style-loader' },
                     { loader: 'css-loader' },
                     {
+                        loader: 'postcss-loader',
+                        options: {
+                            ident: 'postcss',
+                            plugins: (/* loader */) => [
+                                require('autoprefixer')(),
+                                require('cssnano')(),
+                            ],
+                        },
+                    },
+                    {
                         loader: 'sass-loader',
                         options: {
                             data: `$board_size: ${config.BOARD_SIZE};`,

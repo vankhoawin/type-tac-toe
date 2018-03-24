@@ -1,9 +1,10 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400");
 @import 'variables';
 
 html,
 body {
     height: 100%;
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: 'Roboto', Helvetica, Arial, sans-serif;
     font-size: 16px;
     margin: 0;
     background-color: $background-color-main;
@@ -32,12 +33,6 @@ body {
     &:active {
         color: darken($font-grey-color, 5%);
     }
-
-    &--header {
-        position: absolute;
-        top: 15px;
-        left: 15px;
-    }
 }
 
 .header {
@@ -46,4 +41,20 @@ body {
     position: relative;
     text-align: center;
     color: $font-color;
+
+    &__title {
+        margin: 0 0 20px;
+    }
+
+    @include breakpoint('small') {
+        &__title {
+            margin-top: 20px;
+        }
+
+        .new-game-button {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+        }
+    }
 }
