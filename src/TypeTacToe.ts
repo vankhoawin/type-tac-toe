@@ -70,6 +70,10 @@ export default class TypeTacToe {
         )) {
             this.model.setStatus(E.Status.Victory);
             this.model.incrementScoreForPlayer(this.model.turn);
+            this.view.setScoreForPlayer(
+                this.model.turn,
+                this.model.getScoreForPlayer(this.model.turn),
+            );
         } else if (this.logic.checkIfBoardIsFilled(this.model.state)) {
             this.model.setStatus(E.Status.Draw);
         } else {

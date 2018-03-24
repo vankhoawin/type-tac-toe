@@ -53,6 +53,14 @@ export default class View {
         }
     }
 
+    public setScoreForPlayer(turn: E.Turn, score: number): void {
+        if (turn === E.Turn.Player1) {
+            this.$.player1Score.innerHTML = String(score);
+        } else {
+            this.$.player2Score.innerHTML = String(score);
+        }
+    }
+
     private removeBoardEventListener(): void {
         // on first run, dynamically created selectors do not exist
         if (!this.$.board) {

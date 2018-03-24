@@ -17,7 +17,7 @@
                 class="new-game-button new-game-button--header"
                 type="button"
             >
-                New Game
+                Reset
             </button>
             <h1>Type-Tac-Toe</h1>
         </header>
@@ -29,14 +29,24 @@
                 data-is-current-turn="true"
             >
                 <div class="toolbar__player-title">Player 1</div>
-                <div class="toolbar__score toolbar__score--1">0</div>
+                <div
+                    id="player-1-score"
+                    class="toolbar__score toolbar__score--1"
+                >
+                    0
+                </div>
             </div>
             <div
                 id="player-2-score-container"
                 class="toolbar__score-container"
             >
                 <div class="toolbar__player-title">Player 2</div>
-                <div class="toolbar__score toolbar__score--2">0</div>
+                <div
+                    id="player-2-score"
+                    class="toolbar__score toolbar__score--2"
+                >
+                    0
+                </div>
             </div>
         </div>
     </div>
