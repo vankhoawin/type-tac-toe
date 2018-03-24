@@ -11,7 +11,7 @@ export default class View {
     }
 
     public renderGame(state: T.GameStateGrid, meta: T.IGameStateMeta): void {
-        this.$.board.innerHTML = this.renderGrid(state);
+        this.$.board.innerHTML = this.renderGrid(state, meta.lastMove);
         this.$.toolbar.innerHTML = this.renderToolbar(meta);
 
         this.removeEventListeners();
@@ -43,24 +43,29 @@ export default class View {
         this.$.board.addEventListener('click', this.events.clickSquare);
     }
 
-    private renderSquare(square: E.Square, rowIndex: number, colIndex: number): string {
-        const commonClasses = 'js-board-square board__square board__square';
-        const row = `data-row=${rowIndex}`;
-        const col = `data-col=${colIndex}`;
+    private renderSquare(square: E.Square, { row, col }: T.IPoint, lastMove: T.IPoint): string {
+        const sRow: string = `data-row=${row}`;
+        const sCol: string = `data-col=${col}`;
+        const isLastMovedSquare: boolean = lastMove.row === row && lastMove.col === col;
+        let commonClasses: string = 'js-board-square board__square board__square';
+
+        if (isLastMovedSquare) {
+            commonClasses = `board__square--is-last-moved ${commonClasses}`;
+        }
 
         if (square === E.Square.X) {
-            return `<button ${row} ${col} class="${commonClasses}--X">X</button>`;
+            return `<button ${sRow} ${sCol} class="${commonClasses}--X">X</button>`;
         } else if (square === E.Square.O) {
-            return `<button ${row} ${col} class="${commonClasses}--O">O</button>`;
+            return `<button ${sRow} ${sCol} class="${commonClasses}--O">O</button>`;
         } else {
-            return `<button ${row} ${col} class="${commonClasses}--empty"></button>`;
+            return `<button ${sRow} ${sCol} class="${commonClasses}--empty"></button>`;
         }
     }
 
-    private renderGrid(grid: T.GameStateGrid): string {
+    private renderGrid(grid: T.GameStateGrid, lastMove: T.IPoint): string {
         const html: string = grid.reduce((acc, row, i) => (
             acc + row.reduce((acc2, square, j) => (
-                acc2 + this.renderSquare(square, i, j)
+                acc2 + this.renderSquare(square, { row: i, col: j }, lastMove)
              ), '')
         ), '');
 

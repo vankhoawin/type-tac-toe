@@ -1,11 +1,11 @@
 @import 'variables';
+@import 'animations';
 @import 'mixins';
 
 .board {
     @include component();
 
-    display: grid;
-    // use global variable to render board template
+    display: grid; // use global variable to render board template
     grid-template: repeat($board-size, 1fr) / repeat($board-size, 1fr);
     grid-gap: 10px;
 
@@ -38,6 +38,11 @@
 
         &--O {
             background-color: $background-color-square-O;
+        }
+
+        &--is-last-moved {
+            animation: swing 1s ease;
+            animation-iteration-count: 1;
         }
     }
 }

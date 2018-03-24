@@ -1,9 +1,12 @@
 import * as E from './enums';
 import * as T from './types';
 
+const emptyLastMove = { row: -1, col: -1 };
+
 export default class Model {
     private STATE: T.GameStateGrid;
     private META: T.IGameStateMeta = {
+        lastMove: emptyLastMove,
         score: {
             [E.Turn.Player1]: 0,
             [E.Turn.Player2]: 0,
@@ -35,6 +38,10 @@ export default class Model {
         };
     }
 
+    public resetLastMove(): void {
+        this.META.lastMove = { ...emptyLastMove };
+    }
+
     public get status(): E.Status {
         return this.META.status;
     }
@@ -62,8 +69,9 @@ export default class Model {
         return this.STATE[row][col];
     }
 
-    public setSquare({ row, col }: T.IPoint, square: E.Square): void {
-        this.STATE[row][col] = square;
+    public setSquare(point: T.IPoint, square: E.Square): void {
+        this.STATE[point.row][point.col] = square;
+        this.META.lastMove = point;
     }
 
     public getScoreForPlayer(turn: E.Turn): number {

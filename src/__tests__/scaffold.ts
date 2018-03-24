@@ -18,6 +18,7 @@ export default class Scaffold {
     `;
 
     private static META: T.IGameStateMeta = {
+        lastMove: { row: 1, col: 1 },
         score: {
             [E.Turn.Player1]: 3,
             [E.Turn.Player2]: 2,

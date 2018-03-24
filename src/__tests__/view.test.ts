@@ -70,7 +70,7 @@ describe('View', () => {
         // should be no-op
         view.attachEventListeners();
 
-        view.$.board.innerHTML = view.renderGrid(state);
+        view.$.board.innerHTML = view.renderGrid(state, meta);
         view.$.toolbar.innerHTML = view.renderToolbar(meta);
 
         view.$.newGameButton = dom.window.document.getElementById('js-new-button')!;
@@ -96,7 +96,7 @@ describe('View', () => {
         // should be no-op
         view.removeEventListeners();
 
-        view.$.board.innerHTML = view.renderGrid(state);
+        view.$.board.innerHTML = view.renderGrid(state, meta);
         view.$.toolbar.innerHTML = view.renderToolbar(meta);
 
         view.$.newGameButton = dom.window.document.getElementById('js-new-button')!;
@@ -134,7 +134,7 @@ describe('View', () => {
     });
 
     it('renders a grid', () => {
-        element = view.renderGrid(state);
+        element = view.renderGrid(state, meta);
 
         expect(element).toMatchSnapshot();
     });

@@ -29,6 +29,7 @@ export interface IGameStateMeta {
         [E.Turn.Player2]: number,
     };
     size: number;
+    lastMove: IPoint;
 }
 
 export interface IGameEventHandlers {

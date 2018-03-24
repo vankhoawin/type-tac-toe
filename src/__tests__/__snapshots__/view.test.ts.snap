@@ -54,11 +54,11 @@ exports[`View renders a toolbar 1`] = `
         "
 `;
 
-exports[`View renders an O square 1`] = `"<button data-row=0 data-col=1 class=\\"js-board-square board__square board__square--O\\">O</button>"`;
+exports[`View renders an O square 1`] = `"<button data-row=undefined data-col=undefined class=\\"board__square--is-last-moved js-board-square board__square board__square--O\\">O</button>"`;
 
-exports[`View renders an X square 1`] = `"<button data-row=0 data-col=0 class=\\"js-board-square board__square board__square--X\\">X</button>"`;
+exports[`View renders an X square 1`] = `"<button data-row=undefined data-col=undefined class=\\"board__square--is-last-moved js-board-square board__square board__square--X\\">X</button>"`;
 
-exports[`View renders an empty square 1`] = `"<button data-row=0 data-col=2 class=\\"js-board-square board__square board__square--empty\\"></button>"`;
+exports[`View renders an empty square 1`] = `"<button data-row=undefined data-col=undefined class=\\"board__square--is-last-moved js-board-square board__square board__square--empty\\"></button>"`;
 
 exports[`View renders toolbar buttons 1`] = `
 "

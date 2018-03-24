@@ -29,6 +29,7 @@ export default class TypeTacToe {
     private onClickNewGameHandler(e: Event): void {
         e.preventDefault();
         this.model.resetBoard();
+        this.model.resetLastMove();
         this.model.setStatus(E.Status.InProgress);
         this.model.toggleTurn(this.model.turn);
         this.rerender();
