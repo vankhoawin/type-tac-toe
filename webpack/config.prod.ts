@@ -1,4 +1,3 @@
-import CleanWebpackPlugin from 'clean-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 import HtmlWebPackPlugin from 'html-webpack-plugin';
 import * as path from 'path';
@@ -23,9 +22,8 @@ const webpackProdConfig: webpack.Configuration = {
                 conservativeCollapse: true,
                 removeComments: true,
             },
-            template: 'template.ejs',
+            template: 'src/template.ejs',
         }),
-        new CleanWebpackPlugin(path.resolve(__dirname, '..', 'dist')),
         new CompressionPlugin({
             algorithm: 'gzip',
             asset: '[path].gz[query]',

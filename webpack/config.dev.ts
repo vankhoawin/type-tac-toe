@@ -17,7 +17,7 @@ const webpackDevConfig: webpack.Configuration = {
         new HtmlWebPackPlugin({
             GA_ANALYTICS: config.GA_ANALYTICS,
             filename: 'index.html',
-            template: 'template.ejs',
+            template: 'src/template.ejs',
         }),
         new webpack.HotModuleReplacementPlugin(),
     ],

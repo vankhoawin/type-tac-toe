@@ -1,12 +1,13 @@
+import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
 import HtmlWebPackPlugin from 'html-webpack-plugin';
 import * as path from 'path';
 import * as webpack from 'webpack';
 import config from '../config';
 
 const webpackCommonConfig: webpack.Configuration = {
-    context: path.resolve(__dirname, '..', 'src'),
+    context: path.resolve(__dirname, '..'),
     entry: [
-        './index.ts',
+        path.resolve(__dirname, '..', 'src', 'index.ts'),
     ],
     module: {
         rules: [
@@ -48,6 +49,7 @@ const webpackCommonConfig: webpack.Configuration = {
         ],
     },
     plugins: [
+        new FaviconsWebpackPlugin(path.resolve(__dirname, '..', 'public', 'tictactoe.png')),
     ],
     resolve: {
         extensions: ['.js', '.ts', '.scss'],
