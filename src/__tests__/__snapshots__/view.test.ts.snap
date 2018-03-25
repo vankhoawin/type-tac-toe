@@ -16,21 +16,6 @@ exports[`View renders a grid 1`] = `
             <button data-row=1 data-col=2 class=\\"js-board-square board__square board__square--empty\\"></button><button data-row=2 data-col=0 class=\\"js-board-square board__square board__square--empty\\"></button><button data-row=2 data-col=1 class=\\"js-board-square board__square board__square--empty\\"></button><button data-row=2 data-col=2 class=\\"js-board-square board__square board__square--empty\\"></button>"
 `;
 
-exports[`View renders a score container 1`] = `
-"
-            <div class=\\"toolbar__score-container\\">
-                <div>Player 3</div>
-                <div class=\\"toolbar__player-3-score\\">undefined</div>
-            </div>
-        "
-`;
-
-exports[`View renders a score subheader 1`] = `"Draw!"`;
-
-exports[`View renders a score subheader 2`] = `"Player 1's turn."`;
-
-exports[`View renders a score subheader 3`] = `"Player 1 wins!"`;
-
 exports[`View renders an O square 1`] = `
 "
                 <button data-row=undefined data-col=undefined class=\\"board__square--is-last-moved js-board-square board__square board__square--O\\">
@@ -48,3 +33,115 @@ exports[`View renders an X square 1`] = `
 `;
 
 exports[`View renders an empty square 1`] = `"<button data-row=undefined data-col=undefined class=\\"board__square--is-last-moved js-board-square board__square board__square--empty\\"></button>"`;
+
+exports[`View tests \`setModalTitle\` 1`] = `
+"
+                <h2 id=\\"js-modal-title\\" class=\\"modal__title\\"></h2>
+                <button id=\\"js-modal-new-game-button\\" class=\\"new-game-button\\" type=\\"button\\">
+                    Play again?
+                </button>
+            "
+`;
+
+exports[`View tests \`setModalTitle\` 2`] = `
+"
+                <h2 id=\\"js-modal-title\\" class=\\"modal__title\\"></h2>
+                <button id=\\"js-modal-new-game-button\\" class=\\"new-game-button\\" type=\\"button\\">
+                    Play again?
+                </button>
+            "
+`;
+
+exports[`View tests \`setScoreForPlayer\` 1`] = `"1"`;
+
+exports[`View tests \`setScoreForPlayer\` 2`] = `"5"`;
+
+exports[`View tests \`toggleModal\` 1`] = `
+"
+            <div id=\\"app\\" class=\\"app\\">
+                <header class=\\"header\\">
+                    <h1 class=\\"header__title\\">Type Tac Toe</h1>
+                    <button id=\\"js-reset-game-button\\" class=\\"new-game-button\\" type=\\"button\\">
+                        Reset
+                    </button>
+                </header>
+                <div id=\\"board\\" class=\\"board\\"></div>
+                <div id=\\"toolbar\\" class=\\"toolbar\\">
+                    <div id=\\"player-1-score-container\\" class=\\"toolbar__score-container\\" data-is-current-turn=\\"true\\">
+                        <div class=\\"toolbar__player-title\\">Player 1</div>
+                        <div id=\\"player-1-score\\" class=\\"toolbar__score toolbar__score--1\\">
+                            0
+                        </div>
+                    </div>
+                    <div id=\\"player-2-score-container\\" class=\\"toolbar__score-container\\">
+                        <div class=\\"toolbar__player-title\\">Player 2</div>
+                        <div id=\\"player-2-score\\" class=\\"toolbar__score toolbar__score--2\\">
+                            0
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id=\\"modal\\" class=\\"modal\\">
+                <h2 id=\\"js-modal-title\\" class=\\"modal__title\\"></h2>
+                <button id=\\"js-modal-new-game-button\\" class=\\"new-game-button\\" type=\\"button\\">
+                    Play again?
+                </button>
+            </div>
+        
+    "
+`;
+
+exports[`View tests \`toggleModal\` 2`] = `
+"
+            <div id=\\"app\\" class=\\"app\\">
+                <header class=\\"header\\">
+                    <h1 class=\\"header__title\\">Type Tac Toe</h1>
+                    <button id=\\"js-reset-game-button\\" class=\\"new-game-button\\" type=\\"button\\">
+                        Reset
+                    </button>
+                </header>
+                <div id=\\"board\\" class=\\"board\\"></div>
+                <div id=\\"toolbar\\" class=\\"toolbar\\">
+                    <div id=\\"player-1-score-container\\" class=\\"toolbar__score-container\\" data-is-current-turn=\\"true\\">
+                        <div class=\\"toolbar__player-title\\">Player 1</div>
+                        <div id=\\"player-1-score\\" class=\\"toolbar__score toolbar__score--1\\">
+                            0
+                        </div>
+                    </div>
+                    <div id=\\"player-2-score-container\\" class=\\"toolbar__score-container\\">
+                        <div class=\\"toolbar__player-title\\">Player 2</div>
+                        <div id=\\"player-2-score\\" class=\\"toolbar__score toolbar__score--2\\">
+                            0
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id=\\"modal\\" class=\\"modal\\">
+                <h2 id=\\"js-modal-title\\" class=\\"modal__title\\"></h2>
+                <button id=\\"js-modal-new-game-button\\" class=\\"new-game-button\\" type=\\"button\\">
+                    Play again?
+                </button>
+            </div>
+        
+    "
+`;
+
+exports[`View tests \`toggleTurn\` 1`] = `
+"
+                        <div class=\\"toolbar__player-title\\">Player 1</div>
+                        <div id=\\"player-1-score\\" class=\\"toolbar__score toolbar__score--1\\">
+                            0
+                        </div>
+                    "
+`;
+
+exports[`View tests \`toggleTurn\` 2`] = `
+"
+                        <div class=\\"toolbar__player-title\\">Player 2</div>
+                        <div id=\\"player-2-score\\" class=\\"toolbar__score toolbar__score--2\\">
+                            0
+                        </div>
+                    "
+`;

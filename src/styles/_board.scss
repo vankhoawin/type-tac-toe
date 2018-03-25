@@ -21,7 +21,6 @@
         padding: 0;
         border: 0;
         color: $font-color;
-        transition: all 300ms;
         font-size: 4rem;
 
         @include breakpoint('small') {
@@ -35,6 +34,8 @@
 
         &--empty {
             @include button-color($background-color-square-empty);
+
+            transition: all 200ms;
 
             &:hover,
             &:focus {

@@ -27,10 +27,15 @@ describe('View', () => {
             },
             selectors: {
                 board: dom.window.document.getElementById('board')!,
+                body: dom.window.document.body,
+                modal: dom.window.document.getElementById('modal')!,
                 modalNewGameButton: dom.window.document.getElementById('js-modal-new-game-button')!,
+                modalTitle: dom.window.document.getElementById('js-modal-title')!,
+                player1Score: dom.window.document.getElementById('player-1-score')!,
                 player1ScoreContainer: dom.window.document.getElementById(
                     'player-1-score-container',
                 )!,
+                player2Score: dom.window.document.getElementById('player-2-score')!,
                 player2ScoreContainer: dom.window.document.getElementById(
                     'player-2-score-container',
                 )!,
@@ -58,6 +63,41 @@ describe('View', () => {
         expect(clickSquareMock).toHaveBeenCalled();
     });
 
+    it('tests `toggleModal`', () => {
+        view.toggleModal(meta);
+        expect(view.$.body.innerHTML).toMatchSnapshot();
+
+        meta.status = E.Status.Victory;
+        view.toggleModal(meta);
+        expect(view.$.body.innerHTML).toMatchSnapshot();
+    });
+
+    it('tests `setModalTitle`', () => {
+        meta.status = E.Status.Draw;
+        view.setModalTitle(meta);
+        expect(view.$.modal.innerHTML).toMatchSnapshot();
+
+        meta.status = E.Status.Victory;
+        view.setModalTitle(meta);
+        expect(view.$.modal.innerHTML).toMatchSnapshot();
+    });
+
+    it('tests `toggleTurn`', () => {
+        view.toggleTurn(E.Turn.Player1);
+        expect(view.$.player1ScoreContainer.innerHTML).toMatchSnapshot();
+
+        view.toggleTurn(E.Turn.Player2);
+        expect(view.$.player2ScoreContainer.innerHTML).toMatchSnapshot();
+    });
+
+    it('tests `setScoreForPlayer`', () => {
+        view.setScoreForPlayer(E.Turn.Player1, 1);
+        expect(view.$.player1Score.innerHTML).toMatchSnapshot();
+
+        view.setScoreForPlayer(E.Turn.Player2, 5);
+        expect(view.$.player2Score.innerHTML).toMatchSnapshot();
+    });
+
     it('tests `attachBoardEventListener`', () => {
         // should be no-op
         view.attachBoardEventListener();
@@ -73,24 +113,6 @@ describe('View', () => {
         expect(clickSquareMock).toHaveBeenCalled();
     });
 
-    it('tests `removeBoardEventListener`', () => {
-        // should be no-op
-        view.removeBoardEventListener();
-
-        view.$.board.innerHTML = view.renderGrid(state, meta);
-        view.$.squares = dom.window.document.getElementsByClassName('js-board-square')!;
-
-        view.attachBoardEventListener();
-        view.$.board.click();
-
-        expect(clickSquareMock).toHaveBeenCalledTimes(1);
-
-        view.removeBoardEventListener();
-        view.$.board.click();
-
-        expect(clickSquareMock).toHaveBeenCalledTimes(1);
-    });
-
     ['X', 'O', 'empty'].forEach((squareType, index) => {
         it(`renders an ${squareType} square`, () => {
             element = view.renderSquare(state[0][index], 0, index);
@@ -102,12 +124,6 @@ describe('View', () => {
 
     it('renders a grid', () => {
         element = view.renderGrid(state, meta);
-
-        expect(element).toMatchSnapshot();
-    });
-
-    it('renders a score container', () => {
-        element = view.renderScore(meta, meta.score[meta.turn]);
 
         expect(element).toMatchSnapshot();
     });

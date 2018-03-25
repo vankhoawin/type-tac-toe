@@ -16,7 +16,6 @@ export default class View {
     public renderGame(state: T.GameStateGrid, meta: T.IGameStateMeta): void {
         this.$.board.innerHTML = this.renderGrid(state, meta.lastMove);
 
-        this.removeBoardEventListener();
         // add dynamically created selectors
         this.$.squares = document.getElementsByClassName('js-board-square')!;
         this.attachBoardEventListener();
@@ -61,20 +60,7 @@ export default class View {
         }
     }
 
-    private removeBoardEventListener(): void {
-        // on first run, dynamically created selectors do not exist
-        if (!this.$.board) {
-            return;
-        }
-
-        this.$.board.removeEventListener('click', this.events.clickSquare);
-    }
-
     private attachBoardEventListener(): void {
-        if (!this.$.board) {
-            return;
-        }
-
         this.$.board.addEventListener('click', this.events.clickSquare);
     }
 
@@ -113,19 +99,5 @@ export default class View {
         ), '');
 
         return html;
-    }
-
-    private renderScore(meta: T.IGameStateMeta, player: E.Turn): string {
-        const score: number = meta.score[player];
-        const isPlayerCurrentTurn = meta.turn === player
-            ? ' toolbar__score-container--is-current-turn'
-            : '';
-
-        return `
-            <div class="toolbar__score-container${isPlayerCurrentTurn}">
-                <div>Player ${player}</div>
-                <div class="toolbar__player-${player}-score">${score}</div>
-            </div>
-        `;
     }
 }

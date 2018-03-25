@@ -8,36 +8,59 @@ interface IMoves {
 
 export default class Scaffold {
     private static DOM: string = `
-        <div id="app" class="app">
-            <header class="header">
-                <button
-                    id="js-reset-game-button"
-                    class="header__new-game-button"
-                    type="button"
-                >
-                    New Game
-                </button>
-                <h1>Type-Tac-Toe</h1>
-            </header>
-            <div id="board" class="board"></div>
-            <div id="toolbar" class="toolbar">
-                <div
-                    id="player-1-score-container"
-                    class="toolbar__score-container"
-                    data-is-current-turn="true"
-                >
-                    <div class="toolbar__player-title">Player 1</div>
-                    <div class="toolbar__score toolbar__score--1">0</div>
-                </div>
-                <div
-                    id="player-2-score-container"
-                    class="toolbar__score-container"
-                >
-                    <div class="toolbar__player-title">Player 2</div>
-                    <div class="toolbar__score toolbar__score--2">0</div>
+        <body data-is-modal-open="true">
+            <div id="app" class="app">
+                <header class="header">
+                    <h1 class="header__title">Type Tac Toe</h1>
+                    <button
+                        id="js-reset-game-button"
+                        class="new-game-button"
+                        type="button"
+                    >
+                        Reset
+                    </button>
+                </header>
+                <div id="board" class="board"></div>
+                <div id="toolbar" class="toolbar">
+                    <div
+                        id="player-1-score-container"
+                        class="toolbar__score-container"
+                        data-is-current-turn="true"
+                    >
+                        <div class="toolbar__player-title">Player 1</div>
+                        <div
+                            id="player-1-score"
+                            class="toolbar__score toolbar__score--1"
+                        >
+                            0
+                        </div>
+                    </div>
+                    <div
+                        id="player-2-score-container"
+                        class="toolbar__score-container"
+                    >
+                        <div class="toolbar__player-title">Player 2</div>
+                        <div
+                            id="player-2-score"
+                            class="toolbar__score toolbar__score--2"
+                        >
+                            0
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+
+            <div id="modal" class="modal">
+                <h2 id="js-modal-title" class="modal__title"></h2>
+                <button
+                    id="js-modal-new-game-button"
+                    class="new-game-button"
+                    type="button"
+                >
+                    Play again?
+                </button>
+            </div>
+        </body>
     `;
 
     private static META: T.IGameStateMeta = {

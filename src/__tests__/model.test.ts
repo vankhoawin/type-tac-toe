@@ -26,6 +26,22 @@ describe('Model', () => {
         expect(actual).toBe(expected);
     });
 
+    it('tests `resetLastMove`', () => {
+        model.setSquare({ row: 0, col: 0 }, E.Square.X);
+
+        const oldLastMove: T.IPoint = model.meta.lastMove;
+
+        model.resetLastMove();
+
+        actual = (
+            oldLastMove.row !== model.meta.lastMove.row &&
+            oldLastMove.col !== model.meta.lastMove.col
+        );
+        expected = true;
+
+        expect(actual).toBe(expected);
+    });
+
     it('tests get `status`', () => {
         actual = model.status === model.meta.status;
         expected = true;
