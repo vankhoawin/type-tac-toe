@@ -1,6 +1,7 @@
-// variables shared between JS and CSS
 interface IConfig {
+    // variables shared between JS and CSS
     BOARD_SIZE: number;
+
     GA_ANALYTICS: string;
     PORT: number;
 }

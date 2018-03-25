@@ -30,7 +30,7 @@ body[data-is-modal-open="true"] {
     .app,
     .modal {
         transition: 1s all linear;
-        transition-delay: 1s;
+        transition-delay: 0.5s;
     }
 
     .app {
