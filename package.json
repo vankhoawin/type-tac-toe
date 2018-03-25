@@ -1,6 +1,6 @@
 {
     "name": "type-tac-toe",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "type-tac-toe",
     "main": "index.js",
     "scripts": {
